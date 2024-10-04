@@ -609,3 +609,12 @@ Start importing Assets/TextMesh Pro/Resources/TMP Settings.asset using Guid(3f5b
  -> (artifact id: '67dad185b586f63e47ea3042fdf1c68b') in 0.031194 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 17
+========================================================================
+Received Import Request.
+  Time since last request: 633.015449 seconds.
+  path: Assets/Scenes/BallChoosingUI.unity
+  artifactKey: Guid(dacc55e23bc9841d5a2b651a725a1467) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/BallChoosingUI.unity using Guid(dacc55e23bc9841d5a2b651a725a1467) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'cd6f3a5f3e7c27209ef9b1568cf3aa1c') in 0.002976 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
