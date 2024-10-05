@@ -886,7 +886,6 @@ GameObject:
   - component: {fileID: 1160774870}
   - component: {fileID: 1160774869}
   - component: {fileID: 1160774871}
-  - component: {fileID: 1160774872}
   m_Layer: 0
   m_Name: LeftFlipper
   m_TagString: Untagged
@@ -1063,23 +1062,6 @@ MonoBehaviour:
   hitStrenght: 10000
   flipperDamper: 100
   inputName: LFlipper
---- !u!114 &1160774872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1160774864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5edfe3126e9c4dbcbdf0de986054d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restPosition: 0
-  pressedPosition: 45
-  hitStrenght: 10000
-  flipperDamper: 150
-  inputName: 
 --- !u!1 &1255288274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,7 +1634,6 @@ GameObject:
   - component: {fileID: 1730082853}
   - component: {fileID: 1730082852}
   - component: {fileID: 1730082858}
-  - component: {fileID: 1730082859}
   m_Layer: 0
   m_Name: RightFlipper
   m_TagString: Untagged
@@ -1829,23 +1810,6 @@ MonoBehaviour:
   hitStrenght: 10000
   flipperDamper: 100
   inputName: RFlipper
---- !u!114 &1730082859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1730082851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5edfe3126e9c4dbcbdf0de986054d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restPosition: 0
-  pressedPosition: 45
-  hitStrenght: 10000
-  flipperDamper: 150
-  inputName: 
 --- !u!1 &2034158319
 GameObject:
   m_ObjectHideFlags: 0
