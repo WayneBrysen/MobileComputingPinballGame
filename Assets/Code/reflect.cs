@@ -6,7 +6,7 @@ public class TriggerBounce : MonoBehaviour
 {
     public float bounceFactor = 0.9f; // Bounce coefficient to adjust the rebound force
 
-    void OnTriggerEnter(Collider other)
+/*    void OnTriggerEnter(Collider other)
     {
         // Check if the entering object is the ball
         if (other.CompareTag("Ball")) // Assuming the ball's tag is "Ball"
@@ -28,7 +28,7 @@ public class TriggerBounce : MonoBehaviour
                 ballRigidbody.velocity = reflectedVelocity * bounceFactor;
             }
         }
-    }
+    }*/
 
     // Calculate the collision normal direction based on the closest point
     Vector3 GetCollisionNormal(Collider other)

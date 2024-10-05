@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallMover : MonoBehaviour
 {
-    public Vector3 moveDirection = new Vector3(-1, 0, 0); // 设置移动方向（例如沿X轴正方向）
+    public Vector3 moveDirection; // 设置移动方向（例如沿X轴正方向）
     public float moveSpeed = 5f; // 移动速度
 
     void Update()
