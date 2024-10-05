@@ -5,18 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{7DA844DD-AA95-208E-5A3C-79D68B762CC7}|Assembly-CSharp.csproj|c:\\users\\engli\\onedrive\\documents\\github\\mobilecomputingpinballgame\\assets\\scene\\mainmenu\\script\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7DA844DD-AA95-208E-5A3C-79D68B762CC7}|Assembly-CSharp.csproj|solutionrelative:assets\\scene\\mainmenu\\script\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\Scenes\\Script\\MainMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scenes\\Script\\MainMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\Script\\MainMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Script\\MainMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\MainMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\MainMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -36,43 +24,10 @@
               "RelativeDocumentMoniker": "Assets\\Scene\\MainMenu\\Script\\MainMenu.cs",
               "ToolTip": "C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\Scene\\MainMenu\\Script\\MainMenu.cs",
               "RelativeToolTip": "Assets\\Scene\\MainMenu\\Script\\MainMenu.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T03:58:30.644Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainMenu.cs",
-              "DocumentMoniker": "C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\Scenes\\Script\\MainMenu.cs",
-              "RelativeDocumentMoniker": "Assets\\Scenes\\Script\\MainMenu.cs",
-              "ToolTip": "C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\Scenes\\Script\\MainMenu.cs",
-              "RelativeToolTip": "Assets\\Scenes\\Script\\MainMenu.cs",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T03:28:25.334Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainMenu.cs",
-              "DocumentMoniker": "C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\Script\\MainMenu.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\MainMenu.cs",
-              "ToolTip": "C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\Script\\MainMenu.cs",
-              "RelativeToolTip": "Assets\\Script\\MainMenu.cs",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T03:21:22.991Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MainMenu.cs",
-              "DocumentMoniker": "C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\MainMenu.cs",
-              "RelativeDocumentMoniker": "Assets\\MainMenu.cs",
-              "ToolTip": "C:\\Users\\engli\\OneDrive\\Documents\\GitHub\\MobileComputingPinballGame\\Assets\\MainMenu.cs",
-              "RelativeToolTip": "Assets\\MainMenu.cs",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T02:45:22.65Z"
             }
           ]
         }

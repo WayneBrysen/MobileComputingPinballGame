@@ -1176,16 +1176,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194230}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OnPlayButtonClicked
-        m_Mode: 1
+      - m_Target: {fileID: 2085934924}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Pop-Up-Windown-Transition
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &320521002
@@ -1236,7 +1236,7 @@ Animator:
   m_GameObject: {fileID: 320520999}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 80696297d1ea55844ab1db3932cdc462, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2590,7 +2590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243b00dcba236e44c90fe8f84d26a229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
 --- !u!1 &1075059474
 GameObject:
   m_ObjectHideFlags: 0
@@ -3708,7 +3707,7 @@ Animator:
   m_GameObject: {fileID: 2085934922}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f2efd7be3052fb342a2a639d55110903, type: 2}
+  m_Controller: {fileID: 9100000, guid: 80696297d1ea55844ab1db3932cdc462, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
