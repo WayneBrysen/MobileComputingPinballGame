@@ -18,8 +18,10 @@ public class TriggerBounce : MonoBehaviour
                 // Get the current velocity direction of the ball
                 Vector3 currentVelocity = ballRigidbody.velocity;
 
-                // Reflect the ball's velocity based on the trigger's normal direction
+                // Calculate the true collision normal based on the closest point between the ball and the trigger
                 Vector3 collisionNormal = GetCollisionNormal(other);
+
+                // Reflect the ball's velocity based on the calculated normal direction
                 Vector3 reflectedVelocity = Vector3.Reflect(currentVelocity, collisionNormal);
 
                 // Apply the reflected velocity and adjust its magnitude using bounceFactor
@@ -28,11 +30,16 @@ public class TriggerBounce : MonoBehaviour
         }
     }
 
-    // Custom method to get the collision normal direction
+    // Calculate the collision normal direction based on the closest point
     Vector3 GetCollisionNormal(Collider other)
     {
-        // You can calculate the normal direction based on the trigger's position and the ball's position
-        // For example: return the transform's forward direction (can be adjusted as needed)
-        return transform.forward; // Default to return the trigger's forward direction
+        // Get the closest point on the trigger to the ball
+        Vector3 closestPoint = other.ClosestPoint(transform.position);
+
+        // Calculate the normal direction from the closest point to the trigger's position
+        Vector3 normalDirection = (transform.position - closestPoint).normalized;
+
+        // Return the calculated normal direction
+        return normalDirection;
     }
 }
