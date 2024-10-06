@@ -63,6 +63,8 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.39f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/Scripts/Loader.cs" />
+    <Compile Include="Assets/Scripts/ButtonClicked.cs" />
     <Compile Include="Assets/Scripts/LobbyManager.cs" />
   </ItemGroup>
   <ItemGroup>
