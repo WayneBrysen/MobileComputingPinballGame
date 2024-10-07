@@ -4,8 +4,23 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/GameContent/Scenes/Peddle.unity
+    guid: 36982bd08444d29489a4a8f0f87fd982
+  - enabled: 1
+    path: Assets/GameContent/Scenes/SampleScene.unity
+    guid: 4755b35b590504809a7525fd2109c2e2
   m_configObjects:
-    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: ab24362cc807db646ae4519e47b64005, type: 2}
-    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 0667b8f08b574554596053f572093f43, type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b19a34689beb6c8439771ab0de88c6fb, type: 2}
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
+      type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 0465d33c6aee55f44b0237db8b0e0259,
+      type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: c199e683398494f32b4cde18e73ab731,
+      type: 2}
+    com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: 0b53a025a635a4393ba0b49822242280,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3fd4fc0127790db4bae83f7b77da8d45,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: b07c4ba7650be4c25b3d0c497e7e2bb8,
+      type: 2}
