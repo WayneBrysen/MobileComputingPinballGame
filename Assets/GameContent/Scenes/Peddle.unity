@@ -253,7 +253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 743, y: 2128}
+  m_AnchoredPosition: {x: 0, y: 2400}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &224304929
@@ -1079,6 +1079,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubeObstacle (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7223263624058695063, guid: 90796c9fb59805143a20b1b1d4f75daf,
+        type: 3}
+      propertyPath: m_TagString
+      value: ObstacleThree
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1799,6 +1804,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstacle (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7223263624058695063, guid: 90796c9fb59805143a20b1b1d4f75daf,
+        type: 3}
+      propertyPath: m_TagString
+      value: ObstacleOne
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2026,6 +2036,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CubeObstacle (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223263624058695063, guid: 90796c9fb59805143a20b1b1d4f75daf,
+        type: 3}
+      propertyPath: m_TagString
+      value: ObstacleFour
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2890,7 +2905,7 @@ GameObject:
   - component: {fileID: 4366967003939679154}
   m_Layer: 0
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: ObstacleOne
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4656,6 +4671,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CubeObstacle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223263624058695063, guid: 90796c9fb59805143a20b1b1d4f75daf,
+        type: 3}
+      propertyPath: m_TagString
+      value: ObstacleTwo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
