@@ -130,56 +130,69 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 943438200083973503, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 943438200083973503, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: buttonClicked
       value: 
       objectReference: {fileID: 944290705}
-    - target: {fileID: 3877213511594923849, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 3877213511594923849, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_Name
       value: LobbyLoader
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 325
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalPosition.y
       value: 766.0005
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+    - target: {fileID: 7106426241138332437, guid: 943d3b17ec21d469cb50796d9604210b,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4540412503698211455, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
@@ -327,6 +340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 437108217}
   - component: {fileID: 437108216}
+  - component: {fileID: 437108218}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -411,6 +425,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &437108218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437108215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &537730734
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,7 +678,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 874954054}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6222662
+  m_Size: 0.999961
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -897,7 +934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ce4c2523a3f46bab625ed956887336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyPrefab: {fileID: 3607658319855623781, guid: 3847ca433e4ac455aaa91af0053b89cd, type: 3}
+  lobbyPrefab: {fileID: 3607658319855623781, guid: 3847ca433e4ac455aaa91af0053b89cd,
+    type: 3}
   lobbyContainer: {fileID: 1509398050}
 --- !u!4 &907336285
 Transform:
@@ -1335,7 +1373,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0024719238, y: -361.49625}
+  m_AnchoredPosition: {x: 0, y: -361.49997}
   m_SizeDelta: {x: -475, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1509398051
@@ -1461,7 +1499,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 537730735}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.7388303
+  m_Size: 0.999973
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

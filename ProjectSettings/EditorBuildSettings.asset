@@ -8,9 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/GameContent/Scenes/Peddle.unity
     guid: 36982bd08444d29489a4a8f0f87fd982
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameContent/Scenes/SampleScene.unity
     guid: 4755b35b590504809a7525fd2109c2e2
+  - enabled: 1
+    path: Assets/GameContent/Scenes/LobbyUI.unity
+    guid: dec8179f7c5754488aee1ee1399abddb
+  - enabled: 1
+    path: Assets/GameContent/Scenes/BallChoosingUI.unity
+    guid: dacc55e23bc9841d5a2b651a725a1467
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}
