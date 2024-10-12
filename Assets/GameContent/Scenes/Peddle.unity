@@ -395,8 +395,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1987201932}
-          m_TargetAssemblyTypeName: FlipperMobile, Assembly-CSharp
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: FlipperPressureControl, Assembly-CSharp
           m_MethodName: OnButtonPress
           m_Mode: 1
           m_Arguments:
@@ -411,8 +411,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1987201932}
-          m_TargetAssemblyTypeName: FlipperMobile, Assembly-CSharp
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: FlipperPressureControl, Assembly-CSharp
           m_MethodName: OnButtonRelease
           m_Mode: 1
           m_Arguments:
@@ -801,8 +801,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 959043062}
-          m_TargetAssemblyTypeName: FlipperMobile, Assembly-CSharp
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: FlipperPressureControl, Assembly-CSharp
           m_MethodName: OnButtonPress
           m_Mode: 1
           m_Arguments:
@@ -817,8 +817,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 959043062}
-          m_TargetAssemblyTypeName: FlipperMobile, Assembly-CSharp
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: FlipperPressureControl, Assembly-CSharp
           m_MethodName: OnButtonRelease
           m_Mode: 1
           m_Arguments:
@@ -829,22 +829,52 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &959043062
+--- !u!1 &1011825850
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1011825852}
+  - component: {fileID: 1011825851}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1011825851
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4222884961866412447}
+  m_GameObject: {fileID: 1011825850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d27423973b7449742a6cf82d3e461694, type: 3}
+  m_Script: {fileID: 11500000, guid: 86461150a6c483c44a5d0bef58753837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restPosition: 0
-  pressedPosition: 45
-  hitStrenght: 10000
-  flipperDamper: 150
+  leftFlipper: {fileID: 8948280744187644266}
+  rightFlipper: {fileID: 7135851673175183910}
+--- !u!4 &1011825852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011825850}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 194.16974, y: 64.575455, z: 374.5714}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1013843005
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,22 +2242,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!114 &1987201932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7397524476371845387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d27423973b7449742a6cf82d3e461694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restPosition: 0
-  pressedPosition: -45
-  hitStrenght: 10000
-  flipperDamper: 150
 --- !u!43 &2014478294
 Mesh:
   m_ObjectHideFlags: 0
@@ -3516,7 +3530,7 @@ GameObject:
   - component: {fileID: 1689471997135344655}
   - component: {fileID: 4778341042855851039}
   - component: {fileID: 6822157526712685628}
-  - component: {fileID: 959043062}
+  - component: {fileID: 7135851673175183910}
   m_Layer: 0
   m_Name: RightFlipper
   m_TagString: Untagged
@@ -4052,6 +4066,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1130971945}
   m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
+--- !u!114 &7135851673175183910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4222884961866412447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c90ffa7237df8a4e9005437164502a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restPosition: 0
+  pressedPosition: 45
+  maxHitStrength: 3000
+  flipperDamper: 150
 --- !u!65 &7186525442536434080
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4102,7 +4132,7 @@ GameObject:
   - component: {fileID: 6881486272077697360}
   - component: {fileID: 8948280744187644265}
   - component: {fileID: 2369005281181898359}
-  - component: {fileID: 1987201932}
+  - component: {fileID: 8948280744187644266}
   m_Layer: 0
   m_Name: LeftFlipper
   m_TagString: Untagged
@@ -4589,6 +4619,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &8948280744187644266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7397524476371845387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de637bed0734c9443872f8afbedb831f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restPosition: 0
+  pressedPosition: -45
+  maxHitStrength: 3000
+  flipperDamper: 150
 --- !u!1001 &9152748771656426088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4735,3 +4781,4 @@ SceneRoots:
   - {fileID: 1243998066}
   - {fileID: 664538041}
   - {fileID: 1213328947}
+  - {fileID: 1011825852}
