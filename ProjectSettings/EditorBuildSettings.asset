@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/GameContent/Scenes/UIScene/LobbyUI.unity
+    guid: dec8179f7c5754488aee1ee1399abddb
+  - enabled: 1
+    path: Assets/GameContent/Scenes/UIScene/BallChoosingUI.unity
+    guid: dacc55e23bc9841d5a2b651a725a1467
+  - enabled: 1
     path: Assets/GameContent/Scenes/UIScene/Loading.unity
     guid: bd3ee16c9c49f81418dc1dc4c512d1bb
   - enabled: 1
