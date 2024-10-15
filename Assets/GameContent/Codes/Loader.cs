@@ -13,7 +13,13 @@ public class Loader : MonoBehaviour
     {
         if (buttonClicked.isClicked == true)
         {
-            ExitScene();
+            if(string.Equals(buttonClicked.buttonName, "ExitButton")){
+                ExitScene();
+            } else if(string.Equals(buttonClicked.buttonName, "JOIN LOBBY")){
+                GoToJoinLobby();
+            } else if(string.Equals(buttonClicked.buttonName, "menuButton")){
+                GoToMainMenu();
+            }
         }
     }
 
@@ -35,5 +41,15 @@ public class Loader : MonoBehaviour
 
         //Load
         SceneManager.LoadScene(pageNum);
+    }
+
+    public void GoToJoinLobby()
+    {
+        SceneManager.LoadScene("LobbyUI");
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
