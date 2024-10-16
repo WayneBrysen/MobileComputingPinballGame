@@ -1,112 +1,116 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems; // Import EventSystems for EventTrigger
 
 public class BallLauncher : MonoBehaviour
 {
-    public Button pushButton; // Reference to the PUSH button
-    public Slider powerSlider; // Reference to the power slider
-    public Transform plunger; // Reference to the plunger transform
     public Rigidbody ball; // Reference to the ball's rigidbody
-
-    private float pressTime; // Duration of button press
-    private float maxPressTime = 5.0f; // Max press duration in seconds
-    private bool isPressing = false; // Check if the button is being pressed
-    private float launchForce = 1.0f; // Launch force multiplier (1/10 of original value)
+    public Transform plunger; // Reference to the plunger
+    private string microphoneDevice; // Name of the microphone device
+    private AudioClip microphoneInput; // Store microphone input data
+    private bool isListening = false; // Check if the microphone is actively listening
+    public float volumeMultiplier = 30f; // Multiplier to amplify the microphone volume
     private bool ballInContact = false; // Check if the ball is in contact with the plunger
+    private float maxVolume = 0f; // Store the maximum volume detected
+    private float contactTime = 0f; // Time the ball has been in contact with the plunger
+    private float thresholdContactTime = 0f; // Time the sound has been above the threshold (0.1)
+    private float requiredContactTime = 1f; // The required time for the sound to trigger the launch
 
     void Start()
     {
-        // Initialize the slider value
-        powerSlider.value = 0;
-
-        // Add EventTrigger event listeners to the button
-        EventTrigger eventTrigger = pushButton.gameObject.AddComponent<EventTrigger>();
-
-        // Create PointerDown event listener, triggered when the button is pressed down
-        EventTrigger.Entry pointerDownEntry = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerDown
-        };
-        pointerDownEntry.callback.AddListener((data) => { OnButtonPress(); });
-        eventTrigger.triggers.Add(pointerDownEntry);
-
-        // Create PointerUp event listener, triggered when the button is released
-        EventTrigger.Entry pointerUpEntry = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerUp
-        };
-        pointerUpEntry.callback.AddListener((data) => { OnButtonRelease(); });
-        eventTrigger.triggers.Add(pointerUpEntry);
+        StartMicrophone(); // Start capturing audio from the microphone
     }
 
-    // Called when the button is pressed down
-    public void OnButtonPress()
+    // Start the microphone and capture audio input
+    void StartMicrophone()
     {
-        // Check if the ball is in contact with the plunger
-        if (ballInContact)
+        if (Microphone.devices.Length > 0)
         {
-            isPressing = true;
-            pressTime = 0f; // Reset the press time
-            powerSlider.value = 0; // Reset the slider value
+            microphoneDevice = Microphone.devices[0]; // Use the first microphone device
+            // Start the microphone with a buffer length of 1 second and a high sample rate
+            microphoneInput = Microphone.Start(microphoneDevice, true, 1, 96000); 
+            isListening = true;
         }
+        else
+        {
+            Debug.LogError("No microphone devices found!");
+        }
+    }
+
+    // Stop the microphone input
+    void StopMicrophone()
+    {
+        if (isListening)
+        {
+            Microphone.End(microphoneDevice);
+            isListening = false;
+        }
+    }
+
+    // Calculate the current volume from the microphone input
+    float GetMicrophoneVolume()
+    {
+        float[] samples = new float[512]; // Create a buffer for the samples
+        microphoneInput.GetData(samples, 0); // Get the microphone data
+        float sum = 0f;
+
+        // Calculate RMS (Root Mean Square) value for the sound
+        foreach (float sample in samples)
+        {
+            sum += sample * sample;
+        }
+
+        return Mathf.Sqrt(sum / samples.Length); // Return the RMS value
     }
 
     void Update()
     {
-        // Check if the button is being pressed and the ball is in contact with the plunger
-        if (isPressing && ballInContact)
+        if (ballInContact && isListening)
         {
-            // Accumulate press time
-            pressTime += Time.deltaTime;
+            // Get the current microphone volume
+            float currentVolume = GetMicrophoneVolume();
+            float amplifiedVolume = currentVolume * volumeMultiplier;
 
-            // Limit the press time to maxPressTime
-            if (pressTime > maxPressTime)
+            // Track the maximum volume during the contact
+            if (amplifiedVolume > maxVolume)
             {
-                pressTime = maxPressTime; // Cap the press time
-                isPressing = false; // Stop pressing
-                LaunchBall(true); // Launch the ball with random force if timeout
+                maxVolume = amplifiedVolume;
             }
 
-            // Update the slider value based on press time
-            powerSlider.value = pressTime / maxPressTime;
+            // Only count volumes above the threshold (0.1)
+            if (amplifiedVolume > 0.1f)
+            {
+                thresholdContactTime += Time.deltaTime; // Accumulate time when volume is above the threshold
+            }
+
+            // Debugging: Print current volume and threshold time
+            Debug.Log($"Amplified Microphone Volume: {amplifiedVolume}, Time above 0.1: {thresholdContactTime}");
+
+            // If thresholdContactTime exceeds required time (1 second) and we have a significant volume, launch the ball
+            if (thresholdContactTime >= requiredContactTime)
+            {
+                LaunchBall(); // Launch the ball
+                ResetContact(); // Reset the contact and volume tracking
+            }
         }
     }
 
-    // Called when the button is released
-    public void OnButtonRelease()
+    // Function to launch the ball based on the maximum detected volume
+    private void LaunchBall()
     {
-        if (isPressing && ballInContact)
-        {
-            isPressing = false; // Stop pressing
-            LaunchBall(); // Launch the ball
-        }
-    }
-
-    // Function to launch the ball along the Z-axis
-    // If `useRandomForce` is true, use a random force value between 0 and maxPressTime
-    private void LaunchBall(bool useRandomForce = false)
-    {
-        // Determine the force to be applied based on press time or randomly if specified
-        float force;
-
-        if (useRandomForce)
-        {
-            // Generate a random press time between 0 and maxPressTime
-            float randomPressTime = Random.Range(0f, maxPressTime);
-            force = launchForce * (randomPressTime / maxPressTime);
-        }
-        else
-        {
-            force = launchForce * (pressTime / maxPressTime);
-        }
+        // Clamp maxVolume between 0 and 1 to ensure it fits within the force range
+        float force = Mathf.Clamp(maxVolume, 0f, 1f) * 3f; // 3f is the maximum force
 
         // Apply force along the world z-axis direction
         ball.AddForce(Vector3.forward * force, ForceMode.Impulse); // Vector3.forward is (0, 0, 1)
 
-        // Reset slider and press time
-        powerSlider.value = 0;
-        pressTime = 0f;
+        Debug.Log("Ball Launched with force: " + force);
+    }
+
+    // Reset the contact time and maximum volume
+    private void ResetContact()
+    {
+        contactTime = 0f;
+        thresholdContactTime = 0f; // Reset the time the volume has been above the threshold
+        maxVolume = 0f;
     }
 
     // Detect if the ball is in contact with the plunger using Collision
@@ -116,6 +120,7 @@ public class BallLauncher : MonoBehaviour
         if (collision.gameObject.CompareTag("Ball"))
         {
             ballInContact = true; // Ball is in contact with the plunger
+            ResetContact(); // Reset the variables when contact begins
         }
     }
 
@@ -126,6 +131,7 @@ public class BallLauncher : MonoBehaviour
         if (collision.gameObject.CompareTag("Ball"))
         {
             ballInContact = false; // Ball is no longer in contact with the plunger
+            ResetContact(); // Reset contact state when the ball leaves
         }
     }
 }
