@@ -18,7 +18,6 @@ public class BallSceneInitializer : MonoBehaviourPunCallbacks
 
             GameObject instance = PhotonNetwork.Instantiate(ballSelectionManagerPrefab.name, Vector3.zero, Quaternion.identity);
 
-            // 确保 PhotonView 在本地实例化时被正确拥有
             PhotonView photonView = instance.GetComponent<PhotonView>();
             if (photonView != null)
             {
