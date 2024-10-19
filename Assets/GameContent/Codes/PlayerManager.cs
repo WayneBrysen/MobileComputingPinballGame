@@ -1,5 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
+using Photon.Realtime;
+
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
@@ -10,8 +12,19 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private Vector3 p1BallPosition;
     private Vector3 p2BallPosition;
+    private static bool hasGeneratedBalls = false;
 
-    private bool hasSpawnedBall = false;
+    public static PlayerManager LocalPlayerInstance;
+
+
+    void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
 
     void Start()
     {
@@ -30,19 +43,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             p1BallPosition = p1PositionObj.transform.position;
         }
-        else
-        {
-            Debug.LogError("未找到 P1BallPosition 对象！");
-        }
 
         if (p2PositionObj != null)
         {
             p2BallPosition = p2PositionObj.transform.position;
         }
-        else
+
+/*        // 只有房主生成球
+        if (PhotonNetwork.IsMasterClient && !hasGeneratedBalls)
         {
-            Debug.LogError("未找到 P2BallPosition 对象！");
-        }
+            GenerateBallsForAllPlayers();
+            hasGeneratedBalls = true; // 设置锁定标志，防止重复生成
+        }*/
 
 
         // 打印调试信息，确保对象正确找到
@@ -70,35 +82,59 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        // 检查球是否已经生成
-        if (!hasSpawnedBall)
+        if (photonView.IsMine)
         {
-            // 每个玩家生成并控制自己的球
-            SpawnPlayerBall();
-        }
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                SetPlayerPosition(true); // 南侧（房主）
+            }
+            else
+            {
+                SetPlayerPosition(false); // 北侧（客机）
+                TransferFlipperOwnership(northController);
+            }
 
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            // 房主玩家（P1）：启用南侧摄像机和flippers控制
-            SetPlayerPosition(true); // true 表示是南侧（房主）
-        }
-        else
-        {
-            // 加入玩家（P2）：启用北侧摄像机和flippers控制
-            SetPlayerPosition(false); // false 表示是北侧（客机）
+            // 只在本地的 PlayerManager 上生成球
+            SpawnPlayerBall();
         }
     }
 
+    void GenerateBallsForAllPlayers()
+    {
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.CustomProperties.TryGetValue("selectedBallPrefab", out object selectedBallPrefabNameObj))
+            {
+                string selectedBallPrefabName = selectedBallPrefabNameObj as string;
+                Vector3 spawnPosition = player.IsMasterClient ? p1BallPosition : p2BallPosition;
+
+                // 由房主生成球
+                GameObject playerBall = PhotonNetwork.Instantiate(selectedBallPrefabName, spawnPosition, Quaternion.identity);
+
+                if (playerBall != null)
+                {
+                    Debug.Log($"成功生成球: {selectedBallPrefabName} 在位置: {spawnPosition}，主机端可见");
+                }
+                else
+                {
+                    Debug.LogError($"主机端生成球失败：{selectedBallPrefabName}");
+                }
+
+                // 只有在生成非本地玩家的球时，才转移控制权
+                PhotonView ballPhotonView = playerBall.GetComponent<PhotonView>();
+                if (ballPhotonView != null && ballPhotonView.Owner != player)
+                {
+                    ballPhotonView.TransferOwnership(player);
+                    Debug.Log("所有权转移给玩家：" + player.NickName);
+                }
+
+                Debug.Log("房主生成了玩家的球：" + selectedBallPrefabName + " 在位置：" + spawnPosition);
+            }
+        }
+    }
 
     void SpawnPlayerBall()
     {
-        // 再次检查标志，确保不重复生成球
-        if (hasSpawnedBall)
-        {
-            Debug.LogWarning("球已经生成，跳过生成。");
-            return;
-        }
-
         if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("selectedBallPrefab", out object selectedBallPrefabNameObj))
         {
             string selectedBallPrefabName = selectedBallPrefabNameObj as string;
@@ -109,16 +145,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 return;
             }
 
-            // 生成球的位置：房主在p1BallPosition，客机在p2BallPosition
+            // 生成球的位置：房主在 p1BallPosition，客机在 p2BallPosition
             Vector3 spawnPosition = PhotonNetwork.LocalPlayer.IsMasterClient ? p1BallPosition : p2BallPosition;
 
             // 生成球，并自动分配控制权给本地客户端
             GameObject playerBall = PhotonNetwork.Instantiate(selectedBallPrefabName, spawnPosition, Quaternion.identity);
 
             Debug.Log("生成了玩家的球：" + selectedBallPrefabName + " 在位置：" + spawnPosition);
-
-            // 设置标志为true，表示球已经生成
-            hasSpawnedBall = true;
         }
         else
         {

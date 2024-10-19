@@ -9,6 +9,10 @@ public class BallController : MonoBehaviourPun, IPunObservable
     private Vector3 networkPosition;
     private Quaternion networkRotation;
 
+    // 插值速率
+    private float positionLerpRate = 10f;
+    private float rotationLerpRate = 10f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -22,8 +26,6 @@ public class BallController : MonoBehaviourPun, IPunObservable
         {
             // 其他玩家的球，禁用物理引擎控制，由网络同步位置
             rb.isKinematic = true;
-
-            // 初始化网络位置和旋转
             networkPosition = transform.position;
             networkRotation = transform.rotation;
         }
@@ -33,23 +35,20 @@ public class BallController : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
         {
-            // 对非本地球进行插值更新，平滑移动
-            float lerpRate = 10f; // 插值速度，可以根据需要调整
-            transform.position = Vector3.Lerp(transform.position, networkPosition, Time.fixedDeltaTime * lerpRate);
-            transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, Time.fixedDeltaTime * lerpRate);
+            // 对非本地球进行插值更新，平滑移动和旋转
+            transform.position = Vector3.Lerp(transform.position, networkPosition, Time.fixedDeltaTime * positionLerpRate);
+            transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, Time.fixedDeltaTime * rotationLerpRate);
         }
-        // 本地玩家的球的物理行为由物理引擎自动处理，无需在此添加代码
     }
 
-    // 实现 IPunObservable 接口，用于自定义同步球的位置和旋转
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
             // 本地玩家发送数据给其他客户端
-            stream.SendNext(rb.position);
+            stream.SendNext(transform.position);
             stream.SendNext(rb.velocity);
-            stream.SendNext(rb.rotation);
+            stream.SendNext(transform.rotation);
         }
         else
         {
@@ -57,6 +56,12 @@ public class BallController : MonoBehaviourPun, IPunObservable
             networkPosition = (Vector3)stream.ReceiveNext();
             Vector3 networkVelocity = (Vector3)stream.ReceiveNext();
             networkRotation = (Quaternion)stream.ReceiveNext();
+
+            // 更新非本地球的速度
+            if (rb.isKinematic)
+            {
+                rb.velocity = networkVelocity;
+            }
         }
     }
 }

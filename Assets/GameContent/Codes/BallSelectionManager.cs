@@ -17,6 +17,8 @@ public class BallSelectionManager : MonoBehaviourPunCallbacks
 
     private int currentBallIndex = 0; // 当前选中的2D球索引
 
+    private string lastSelectedBall = "";
+
     void Start()
     {
         // 查找场景中的 UI 元素
@@ -137,6 +139,14 @@ public class BallSelectionManager : MonoBehaviourPunCallbacks
     {
         string selectedBallPrefabName = ballPrefabs[currentBallIndex].name;
 
+        if (lastSelectedBall == selectedBallPrefabName)
+        {
+            Debug.Log("已选择相同的球，跳过更新。");
+            return;
+        }
+
+        lastSelectedBall = selectedBallPrefabName;
+
         // 将选择的球的Prefab名称和选择状态存储到Photon的自定义属性中
         ExitGames.Client.Photon.Hashtable playerProps = new ExitGames.Client.Photon.Hashtable();
         playerProps["selectedBallPrefab"] = selectedBallPrefabName;
@@ -188,7 +198,6 @@ public class BallSelectionManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // 当玩家属性更新时，更新选择的球
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         Debug.Log("OnPlayerPropertiesUpdate: 玩家属性更新被调用");
@@ -296,9 +305,8 @@ public class BallSelectionManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient && !isSceneLoading)
         {
-            isSceneLoading = true; // 标记场景加载已开始
+            isSceneLoading = true;
 
-            // 主机负责加载场景，并通知其他客户端
             photonView.RPC("LoadSceneForClients", RpcTarget.All, "MainGame_PC");
         }
         else
@@ -311,15 +319,17 @@ public class BallSelectionManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void LoadSceneForClients(string sceneName)
     {
-        try
-        {
-            Debug.Log("正在加载场景: " + sceneName);
-            PhotonNetwork.LoadLevel(sceneName);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("加载场景时出错：" + e.Message);
-        }
+
+            try
+            {
+                Debug.Log("正在加载场景: " + sceneName);
+                PhotonNetwork.LoadLevel(sceneName);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("加载场景时出错：" + e.Message);
+                isSceneLoading = false;
+            }
     }
 
     // 更新 StartGame 按钮的可交互性和外观
