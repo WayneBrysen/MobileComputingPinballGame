@@ -380,7 +380,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1089022443}
         m_TargetAssemblyTypeName: CreateAndJoinRooms, Assembly-CSharp
         m_MethodName: CreateRoom
         m_Mode: 1
@@ -935,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5576921c4443ed4428f8e756840d9bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  createInput: {fileID: 0}
+  createInput: {fileID: 297174598}
   joinInput: {fileID: 0}
 --- !u!4 &1089022444
 Transform:
