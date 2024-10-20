@@ -1752,7 +1752,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1299033199}
   m_CullTransparentMesh: 1
---- !u!1001 &1503477549
+--- !u!1001 &1511300242
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1760,11 +1760,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 943438200083973503, guid: 943d3b17ec21d469cb50796d9604210b,
-        type: 3}
-      propertyPath: buttonName
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 943438200083973503, guid: 943d3b17ec21d469cb50796d9604210b,
         type: 3}
       propertyPath: buttonClicked
@@ -1828,7 +1823,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4540412503698211455, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
-    - {fileID: 8396400168863181143, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
@@ -2336,7 +2330,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1503477549}
+  - {fileID: 1511300242}
   - {fileID: 294377336}
   - {fileID: 631363536}
   - {fileID: 1911779970}
