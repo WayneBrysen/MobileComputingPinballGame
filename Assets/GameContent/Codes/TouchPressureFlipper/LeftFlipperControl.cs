@@ -5,11 +5,17 @@ public class LeftFlipperControl : MonoBehaviour
 {
     public float restPosition = 0f;
     public float pressedPosition = 45f;
-    public float maxHitStrength = 1000f; // 最大弹起力度
+    public float minHitStrength = 3000f;
+    public float maxHitStrength = 20000f; // 最大弹起力度
     public float flipperDamper = 150f;
+    public float smoothPressureSpeed = 5f;      // 压力平滑过渡的速度
     HingeJoint hinge;
     private bool isPressed = false;
-    private float pressure = 0f;  // 当前触摸压力
+    private float currentPressure = 0f;         // 当前的压力值
+    private float targetPressure = 0f;          // 目标压力值
+    private bool isDoublePoints = false;
+    public int scoreValue;  // 每次碰撞增加的分数
+    private GameManager gameManager;  // 引用ScoreManager
 
     void Start()
     {
@@ -21,21 +27,25 @@ public class LeftFlipperControl : MonoBehaviour
     public void OnButtonPress(float touchPressure)
     {
         isPressed = true;
-        pressure = touchPressure;  // 设置触摸压力
+        targetPressure = touchPressure;  // 设置触摸压力
     }
 
     // 松开时调用
     public void OnButtonRelease()
     {
         isPressed = false;
-        pressure = 0f;  // 重置压力
+        targetPressure = 0f;  // 重置压力
     }
 
     void Update()
     {
+        currentPressure = Mathf.Lerp(currentPressure, targetPressure, Time.deltaTime * smoothPressureSpeed);
+        // 计算弹簧力度，确保在合理范围内
+        float springForce = Mathf.Clamp(minHitStrength + 15000 * currentPressure, 5000, 20000);
+
         JointSpring spring = new JointSpring
         {
-            spring = maxHitStrength + 20000 * pressure,  // 根据压力调整力度
+            spring = springForce,  // 根据压力动态调整弹力
             damper = flipperDamper
         };
 
@@ -52,6 +62,17 @@ public class LeftFlipperControl : MonoBehaviour
 
         hinge.spring = spring;
         hinge.useLimits = true;
+    }
+    public void SetDoublePoints(bool isActive)
+    {
+        isDoublePoints = isActive;
+        Debug.Log("Left Flipper Double Points Mode: " + isActive);
+    }
+
+    // 获取是否启用了双倍积分模式
+    public bool IsDoublePointsActive()
+    {
+        return isDoublePoints;
     }
 }
 
