@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private Camera northPlayerCamera;
     private GameObject southController;
     private GameObject northController;
+    private GameObject southPlunger;
+    private GameObject northPlunger;
 
     private Vector3 p1BallPosition;
     private Vector3 p2BallPosition;
@@ -31,6 +33,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // 自动查找场景中的摄像机
         southPlayerCamera = GameObject.FindWithTag("SouthCamera")?.GetComponent<Camera>();
         northPlayerCamera = GameObject.FindWithTag("NorthCamera")?.GetComponent<Camera>();
+
+        southPlunger = GameObject.Find("southPlunger");
+        northPlunger = GameObject.Find("northPlunger");
 
         // 自动查找场景中的控制器
         southController = GameObject.Find("southController");
@@ -99,7 +104,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void GenerateBallsForAllPlayers()
+/*    void GenerateBallsForAllPlayers()
     {
         foreach (Player player in PhotonNetwork.PlayerList)
         {
@@ -131,7 +136,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 Debug.Log("房主生成了玩家的球：" + selectedBallPrefabName + " 在位置：" + spawnPosition);
             }
         }
-    }
+    }*/
 
     void SpawnPlayerBall()
     {
@@ -181,8 +186,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             southPlayerCamera.enabled = true;
             northPlayerCamera.enabled = false;
 
-            SetFlippersControl(southController, true);
-            SetFlippersControl(northController, false);
+            SetFlippersControl(southController,southPlunger, true);
+            SetFlippersControl(northController, northPlunger, false);
         }
         else
         {
@@ -190,16 +195,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             southPlayerCamera.enabled = false;
             northPlayerCamera.enabled = true;
 
-            SetFlippersControl(northController, true);
-            SetFlippersControl(southController, false);
+            SetFlippersControl(northController, northPlunger, true);
+            SetFlippersControl(southController, southPlunger, false);
         }
     }
 
     // 启用或禁用 flippers 的控制
-    void SetFlippersControl(GameObject controller, bool isEnabled)
+    void SetFlippersControl(GameObject controller, GameObject plunger, bool isEnabled)
     {
         var leftFlipper = controller.transform.Find("LeftFlipper").GetComponent<FlipperScript>();
         var rightFlipper = controller.transform.Find("RightFlipper").GetComponent<FlipperScript>();
+        var plungerScript = plunger.GetComponent<PlungerLauncher>();
 
         if (leftFlipper != null)
         {
@@ -209,6 +215,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (rightFlipper != null)
         {
             rightFlipper.enabled = isEnabled;
+        }
+
+        if (plunger != null)
+        {
+            plungerScript.enabled = isEnabled;
         }
     }
 }
