@@ -1,6 +1,7 @@
 using UnityEngine;
+using Photon.Pun;
 
-public class BallLauncher : MonoBehaviour
+public class PlungerLauncher : MonoBehaviourPun
 {
     private string microphoneDevice; // Name of the microphone device
     private AudioClip microphoneInput; // Store microphone input data
@@ -15,7 +16,11 @@ public class BallLauncher : MonoBehaviour
 
     void Start()
     {
-        StartMicrophone(); // Start capturing audio from the microphone
+        // Only start the microphone on the local client
+        if (photonView.IsMine)
+        {
+            StartMicrophone();
+        }
     }
 
     // Start the microphone and capture audio input
@@ -24,8 +29,7 @@ public class BallLauncher : MonoBehaviour
         if (Microphone.devices.Length > 0)
         {
             microphoneDevice = Microphone.devices[0]; // Use the first microphone device
-            // Start the microphone with a buffer length of 1 second and a high sample rate
-            microphoneInput = Microphone.Start(microphoneDevice, true, 1, 96000); 
+            microphoneInput = Microphone.Start(microphoneDevice, true, 1, 96000);
             isListening = true;
         }
         else
@@ -51,10 +55,9 @@ public class BallLauncher : MonoBehaviour
         microphoneInput.GetData(samples, 0); // Get the microphone data
         float sum = 0f;
 
-        // Calculate RMS (Root Mean Square) value for the sound
         foreach (float sample in samples)
         {
-            sum += sample * sample;
+            sum += sample * sample; // Calculate RMS (Root Mean Square) value for the sound
         }
 
         return Mathf.Sqrt(sum / samples.Length); // Return the RMS value
@@ -62,9 +65,9 @@ public class BallLauncher : MonoBehaviour
 
     void Update()
     {
-        if (ballInContact && isListening)
+        // Only perform volume detection and ball launch on the local client
+        if (photonView.IsMine && ballInContact && isListening)
         {
-            // Get the current microphone volume
             float currentVolume = GetMicrophoneVolume();
             float amplifiedVolume = currentVolume * volumeMultiplier;
 
@@ -95,19 +98,12 @@ public class BallLauncher : MonoBehaviour
     // Function to launch the ball based on the maximum detected volume
     private void LaunchBall()
     {
-        // Find the ball by its tag
         ball = GameObject.FindWithTag("Ball");
         if (ball != null)
         {
             Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
-
-            // Calculate the direction from the plunger (this object) to the ball
             Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
-
-            // Clamp maxVolume between 0 and 1 to ensure it fits within the force range
             float force = Mathf.Clamp(maxVolume, 0f, 1f) * 3f; // 3f is the maximum force
-
-            // Apply the force in the calculated direction
             ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
 
             Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);
@@ -122,14 +118,13 @@ public class BallLauncher : MonoBehaviour
     private void ResetContact()
     {
         contactTime = 0f;
-        thresholdContactTime = 0f; // Reset the time the volume has been above the threshold
+        thresholdContactTime = 0f;
         maxVolume = 0f;
     }
 
     // Detect if the ball is in contact with the plunger using Collision
     private void OnCollisionEnter(Collision collision)
     {
-        // Check if the object entering the collision is the ball
         if (collision.gameObject.CompareTag("Ball"))
         {
             ballInContact = true; // Ball is in contact with the plunger
@@ -140,7 +135,6 @@ public class BallLauncher : MonoBehaviour
     // Detect when the ball leaves the contact with the plunger using Collision
     private void OnCollisionExit(Collision collision)
     {
-        // Check if the object exiting the collision is the ball
         if (collision.gameObject.CompareTag("Ball"))
         {
             ballInContact = false; // Ball is no longer in contact with the plunger

@@ -205,7 +205,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     {
         var leftFlipper = controller.transform.Find("LeftFlipper").GetComponent<FlipperScript>();
         var rightFlipper = controller.transform.Find("RightFlipper").GetComponent<FlipperScript>();
-        var plungerScript = plunger.GetComponent<BallLauncher>();
+        var plungerScript = plunger.GetComponent<PlungerLauncher>();
 
         if (leftFlipper != null)
         {
