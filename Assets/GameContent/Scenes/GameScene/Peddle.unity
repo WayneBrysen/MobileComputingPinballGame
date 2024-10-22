@@ -860,6 +860,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftFlipper: {fileID: 8948280744187644266}
   rightFlipper: {fileID: 7135851673175183910}
+  audioSource: {fileID: 0}
+  maxVolume: 1
+  smoothSpeed: 5
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!4 &1011825852
 Transform:
   m_ObjectHideFlags: 0
@@ -4080,8 +4085,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   restPosition: 0
   pressedPosition: 45
-  maxHitStrength: 3000
+  minHitStrength: 3000
+  maxHitStrength: 20000
   flipperDamper: 150
+  smoothPressureSpeed: 5
 --- !u!65 &7186525442536434080
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4633,8 +4640,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   restPosition: 0
   pressedPosition: -45
-  maxHitStrength: 3000
+  minHitStrength: 3000
+  maxHitStrength: 20000
   flipperDamper: 150
+  smoothPressureSpeed: 5
+  scoreValue: 0
 --- !u!1001 &9152748771656426088
 PrefabInstance:
   m_ObjectHideFlags: 0
