@@ -1,6 +1,5 @@
 using Photon.Pun;
 using UnityEngine;
-using Photon.Realtime;
 
 
 public class PlayerManager : MonoBehaviourPunCallbacks
@@ -14,20 +13,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private Vector3 p1BallPosition;
     private Vector3 p2BallPosition;
-    private static bool hasGeneratedBalls = false;
-
-    public static PlayerManager LocalPlayerInstance;
-
-
-    void Awake()
-    {
-        if (photonView.IsMine)
-        {
-            LocalPlayerInstance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-    }
-
     void Start()
     {
         // 自动查找场景中的摄像机
@@ -54,15 +39,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             p2BallPosition = p2PositionObj.transform.position;
         }
 
-/*        // 只有房主生成球
-        if (PhotonNetwork.IsMasterClient && !hasGeneratedBalls)
-        {
-            GenerateBallsForAllPlayers();
-            hasGeneratedBalls = true; // 设置锁定标志，防止重复生成
-        }*/
-
-
-        // 打印调试信息，确保对象正确找到
         Debug.Log("South Camera: " + (southPlayerCamera != null ? "Found" : "Not Found"));
         Debug.Log("North Camera: " + (northPlayerCamera != null ? "Found" : "Not Found"));
         Debug.Log("South Controller: " + (southController != null ? "Found" : "Not Found"));
@@ -77,7 +53,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             Debug.Log("这是其他客户端的 PlayerManager");
         }
 
-        // 手动调用 OnJoinedRoom，确保初始化逻辑正常执行
         if (PhotonNetwork.InRoom)
         {
             Debug.Log("已经在房间中，手动调用 OnJoinedRoom()");
@@ -96,10 +71,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             else
             {
                 SetPlayerPosition(false); // 北侧（客机）
-                TransferFlipperOwnership(northController);
+                TransferFlipperOwnership(northController,northPlunger);
             }
 
-            // 只在本地的 PlayerManager 上生成球
             SpawnPlayerBall();
         }
     }
@@ -164,15 +138,27 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void TransferFlipperOwnership(GameObject controller)
+    void TransferFlipperOwnership(GameObject controller, GameObject plunger)
     {
+        // 转移控制器内的所有 PhotonView 的所有权
         var photonViews = controller.GetComponentsInChildren<PhotonView>();
-        foreach (var photonView in photonViews)
+        foreach (var view in photonViews)
         {
-            if (PhotonNetwork.LocalPlayer != photonView.Owner)
+            if (PhotonNetwork.LocalPlayer != view.Owner)
             {
-                photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
-                Debug.Log("所有权转移: " + photonView.ViewID + " 转给了: " + PhotonNetwork.LocalPlayer.NickName);
+                view.TransferOwnership(PhotonNetwork.LocalPlayer);
+                Debug.Log("所有权转移: " + view.ViewID + " 转给了: " + PhotonNetwork.LocalPlayer.NickName);
+            }
+        }
+
+        // 转移 plunger 的 PhotonView 的所有权
+        if (plunger != null)
+        {
+            var plungerView = plunger.GetComponent<PhotonView>();
+            if (plungerView != null && plungerView.Owner != PhotonNetwork.LocalPlayer)
+            {
+                plungerView.TransferOwnership(PhotonNetwork.LocalPlayer);
+                Debug.Log("Plunger 的所有权转移: " + plungerView.ViewID + " 转给了: " + PhotonNetwork.LocalPlayer.NickName);
             }
         }
     }
