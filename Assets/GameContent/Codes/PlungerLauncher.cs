@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class BallLauncher : MonoBehaviour
 {
-    public Rigidbody ball; // Reference to the ball's rigidbody
     public Transform plunger; // Reference to the plunger
     private string microphoneDevice; // Name of the microphone device
     private AudioClip microphoneInput; // Store microphone input data
@@ -13,6 +12,7 @@ public class BallLauncher : MonoBehaviour
     private float contactTime = 0f; // Time the ball has been in contact with the plunger
     private float thresholdContactTime = 0f; // Time the sound has been above the threshold (0.1)
     private float requiredContactTime = 1f; // The required time for the sound to trigger the launch
+    private GameObject ball; // Reference to the ball (will be found dynamically)
 
     void Start()
     {
@@ -96,13 +96,27 @@ public class BallLauncher : MonoBehaviour
     // Function to launch the ball based on the maximum detected volume
     private void LaunchBall()
     {
-        // Clamp maxVolume between 0 and 1 to ensure it fits within the force range
-        float force = Mathf.Clamp(maxVolume, 0f, 1f) * 3f; // 3f is the maximum force
+        // Find the ball by its tag
+        ball = GameObject.FindWithTag("Ball");
+        if (ball != null)
+        {
+            Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
 
-        // Apply force along the world z-axis direction
-        ball.AddForce(Vector3.forward * force, ForceMode.Impulse); // Vector3.forward is (0, 0, 1)
+            // Calculate the direction from the plunger to the ball
+            Vector3 launchDirection = (ball.transform.position - plunger.position).normalized;
 
-        Debug.Log("Ball Launched with force: " + force);
+            // Clamp maxVolume between 0 and 1 to ensure it fits within the force range
+            float force = Mathf.Clamp(maxVolume, 0f, 1f) * 3f; // 3f is the maximum force
+
+            // Apply the force in the calculated direction
+            ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
+
+            Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);
+        }
+        else
+        {
+            Debug.LogError("No ball found with the tag 'Ball'");
+        }
     }
 
     // Reset the contact time and maximum volume
