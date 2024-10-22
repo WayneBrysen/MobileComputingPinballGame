@@ -46,14 +46,6 @@ public class PlungerLauncher : MonoBehaviourPun
 
             previousIsMineState = true; // 更新状态
         }
-        else if (!photonView.IsMine && previousIsMineState)
-        {
-            // 如果所有权从本地客户端转移出去
-            Debug.Log("Ownership transferred away from local client.");
-            StopMicrophone();
-            hasStartedMicrophone = false; // 重置标志
-            previousIsMineState = false; // 更新状态
-        }
 
         // 只在本地客户端且球接触时进行音量检测
         if (photonView.IsMine && ballInContact && isListening)
@@ -93,7 +85,7 @@ public class PlungerLauncher : MonoBehaviourPun
             microphoneDevice = Microphone.devices[0]; // Use the first microphone device
             microphoneInput = Microphone.Start(microphoneDevice, true, 1, 96000);
             isListening = true;
-            Debug.LogError("microphone devices found!");
+            Debug.Log("microphone devices found!");
         }
         else
         {
