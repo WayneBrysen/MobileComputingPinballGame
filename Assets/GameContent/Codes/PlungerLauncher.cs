@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class BallLauncher : MonoBehaviour
 {
-    public Transform plunger; // Reference to the plunger
     private string microphoneDevice; // Name of the microphone device
     private AudioClip microphoneInput; // Store microphone input data
     private bool isListening = false; // Check if the microphone is actively listening
-    public float volumeMultiplier = 30f; // Multiplier to amplify the microphone volume
+    private float volumeMultiplier = 30f; // Multiplier to amplify the microphone volume
     private bool ballInContact = false; // Check if the ball is in contact with the plunger
     private float maxVolume = 0f; // Store the maximum volume detected
     private float contactTime = 0f; // Time the ball has been in contact with the plunger
@@ -102,8 +101,8 @@ public class BallLauncher : MonoBehaviour
         {
             Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
 
-            // Calculate the direction from the plunger to the ball
-            Vector3 launchDirection = (ball.transform.position - plunger.position).normalized;
+            // Calculate the direction from the plunger (this object) to the ball
+            Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
 
             // Clamp maxVolume between 0 and 1 to ensure it fits within the force range
             float force = Mathf.Clamp(maxVolume, 0f, 1f) * 3f; // 3f is the maximum force
