@@ -8,19 +8,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private Camera northPlayerCamera;
     private GameObject southController;
     private GameObject northController;
-    private GameObject southPlunger;
-    private GameObject northPlunger;
 
     private Vector3 p1BallPosition;
     private Vector3 p2BallPosition;
+
+    private Vector3 p1PlungerPosition;
+    private Vector3 p2PlungerPosition;
+
     void Start()
     {
         // 自动查找场景中的摄像机
         southPlayerCamera = GameObject.FindWithTag("SouthCamera")?.GetComponent<Camera>();
         northPlayerCamera = GameObject.FindWithTag("NorthCamera")?.GetComponent<Camera>();
-
-        southPlunger = GameObject.Find("southPlunger");
-        northPlunger = GameObject.Find("northPlunger");
 
         // 自动查找场景中的控制器
         southController = GameObject.Find("southController");
@@ -28,6 +27,22 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         GameObject p1PositionObj = GameObject.Find("P1BallPosition");
         GameObject p2PositionObj = GameObject.Find("P2BallPosition");
+
+        GameObject p1PlungerPositionObj = GameObject.Find("p1PlungerPosition");
+        GameObject p2PlungerPositionObj = GameObject.Find("p2PlungerPosition");
+
+
+        if (p1PlungerPositionObj != null)
+        {
+            p1PlungerPosition = p1PlungerPositionObj.transform.position;
+        }
+
+        if (p2PlungerPositionObj != null)
+        {
+            p2PlungerPosition = p2PlungerPositionObj.transform.position;
+        }
+
+
 
         if (p1PositionObj != null)
         {
@@ -71,46 +86,25 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             else
             {
                 SetPlayerPosition(false); // 北侧（客机）
-                TransferFlipperOwnership(northController,northPlunger);
+                TransferFlipperOwnership(northController);
             }
+
+            SpawnPlayerplunger();
 
             SpawnPlayerBall();
         }
     }
 
-/*    void GenerateBallsForAllPlayers()
+
+    void SpawnPlayerplunger()
     {
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            if (player.CustomProperties.TryGetValue("selectedBallPrefab", out object selectedBallPrefabNameObj))
-            {
-                string selectedBallPrefabName = selectedBallPrefabNameObj as string;
-                Vector3 spawnPosition = player.IsMasterClient ? p1BallPosition : p2BallPosition;
+        Vector3 spawnPosition = PhotonNetwork.LocalPlayer.IsMasterClient ? p1PlungerPosition : p2PlungerPosition;
 
-                // 由房主生成球
-                GameObject playerBall = PhotonNetwork.Instantiate(selectedBallPrefabName, spawnPosition, Quaternion.identity);
+        GameObject playerplunger = PhotonNetwork.Instantiate("plunger", spawnPosition, Quaternion.identity);
 
-                if (playerBall != null)
-                {
-                    Debug.Log($"成功生成球: {selectedBallPrefabName} 在位置: {spawnPosition}，主机端可见");
-                }
-                else
-                {
-                    Debug.LogError($"主机端生成球失败：{selectedBallPrefabName}");
-                }
+        Debug.Log("生成了玩家的plunger：" + "plunger" + " 在位置：" + spawnPosition);
 
-                // 只有在生成非本地玩家的球时，才转移控制权
-                PhotonView ballPhotonView = playerBall.GetComponent<PhotonView>();
-                if (ballPhotonView != null && ballPhotonView.Owner != player)
-                {
-                    ballPhotonView.TransferOwnership(player);
-                    Debug.Log("所有权转移给玩家：" + player.NickName);
-                }
-
-                Debug.Log("房主生成了玩家的球：" + selectedBallPrefabName + " 在位置：" + spawnPosition);
-            }
-        }
-    }*/
+    }
 
     void SpawnPlayerBall()
     {
@@ -138,7 +132,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void TransferFlipperOwnership(GameObject controller, GameObject plunger)
+    void TransferFlipperOwnership(GameObject controller)
     {
         // 转移控制器内的所有 PhotonView 的所有权
         var photonViews = controller.GetComponentsInChildren<PhotonView>();
@@ -148,17 +142,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             {
                 view.TransferOwnership(PhotonNetwork.LocalPlayer);
                 Debug.Log("所有权转移: " + view.ViewID + " 转给了: " + PhotonNetwork.LocalPlayer.NickName);
-            }
-        }
-
-        // 转移 plunger 的 PhotonView 的所有权
-        if (plunger != null)
-        {
-            var plungerView = plunger.GetComponent<PhotonView>();
-            if (plungerView != null && plungerView.Owner != PhotonNetwork.LocalPlayer)
-            {
-                plungerView.TransferOwnership(PhotonNetwork.LocalPlayer);
-                Debug.Log("Plunger 的所有权转移: " + plungerView.ViewID + " 转给了: " + PhotonNetwork.LocalPlayer.NickName);
             }
         }
     }
@@ -172,8 +155,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             southPlayerCamera.enabled = true;
             northPlayerCamera.enabled = false;
 
-            SetFlippersControl(southController,southPlunger, true);
-            SetFlippersControl(northController, northPlunger, false);
+            SetFlippersControl(southController, true);
+            SetFlippersControl(northController, false);
         }
         else
         {
@@ -181,17 +164,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             southPlayerCamera.enabled = false;
             northPlayerCamera.enabled = true;
 
-            SetFlippersControl(northController, northPlunger, true);
-            SetFlippersControl(southController, southPlunger, false);
+            SetFlippersControl(northController, true);
+            SetFlippersControl(southController, false);
         }
     }
 
     // 启用或禁用 flippers 的控制
-    void SetFlippersControl(GameObject controller, GameObject plunger, bool isEnabled)
+    void SetFlippersControl(GameObject controller, bool isEnabled)
     {
         var leftFlipper = controller.transform.Find("LeftFlipper").GetComponent<FlipperScript>();
         var rightFlipper = controller.transform.Find("RightFlipper").GetComponent<FlipperScript>();
-        var plungerScript = plunger.GetComponent<PlungerLauncher>();
 
         if (leftFlipper != null)
         {
@@ -203,9 +185,5 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             rightFlipper.enabled = isEnabled;
         }
 
-        if (plunger != null)
-        {
-            plungerScript.enabled = isEnabled;
-        }
     }
 }
