@@ -19,7 +19,9 @@ public class Loader : MonoBehaviour
                 GoToJoinLobby();
             } else if(string.Equals(buttonClicked.buttonName, "menuButton")){
                 GoToMainMenu();
-            }
+            } else if(string.Equals(buttonClicked.buttonName, "Scoreboard")){
+                GoToScoreboard();
+            } 
         }
     }
 
@@ -45,11 +47,28 @@ public class Loader : MonoBehaviour
 
     public void GoToJoinLobby()
     {
-        SceneManager.LoadScene("LobbyUI");
+        StartCoroutine(GoToSelectedScene("LobbyUI"));
     }
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(GoToSelectedScene("MainMenu"));
+    }
+
+    public void GoToScoreboard()
+    {
+        StartCoroutine(GoToSelectedScene("Scoreboard"));
+    }
+
+    IEnumerator GoToSelectedScene(string pageName)
+    {
+        //Play
+        transition.SetTrigger("Start");
+
+        //Wait
+        yield return new WaitForSeconds(transitionTime);
+
+        //Load
+        SceneManager.LoadScene(pageName);
     }
 }

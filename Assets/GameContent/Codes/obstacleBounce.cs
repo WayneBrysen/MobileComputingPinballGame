@@ -8,11 +8,17 @@ public class ObstacleBounce : MonoBehaviour
     public int scoreValue;  // 每次碰撞增加的分数
 
     private GameManager gameManager;  // 引用ScoreManager
+    private LeftFlipperControl leftFlipper;
+    private RightFlipperControl rightFlipper;
 
     void Start()
     {
         // 获取场景中的ScoreManager
         gameManager = FindObjectOfType<GameManager>();
+
+        // 获取左右Flipper的引用
+        leftFlipper = FindObjectOfType<LeftFlipperControl>();
+        rightFlipper = FindObjectOfType<RightFlipperControl>();
     }
 
     // 当小球碰到障碍物时触发
@@ -46,6 +52,13 @@ public class ObstacleBounce : MonoBehaviour
             }else
             {
                 scoreValue = 1; // ObstacleFour Score
+            }
+
+            // 检查 Flipper 的双倍积分状态
+            if (leftFlipper != null && leftFlipper.IsDoublePointsActive() ||
+                rightFlipper != null && rightFlipper.IsDoublePointsActive())
+            {
+                scoreValue *= 2;  // 如果双倍积分模式启用，则分数翻倍
             }
             // 增加分数
             gameManager.AddScore(scoreValue);
