@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 
+
 public class PlungerLauncher : MonoBehaviourPun
 {
     private string microphoneDevice; // Name of the microphone device
@@ -13,59 +14,61 @@ public class PlungerLauncher : MonoBehaviourPun
     private float thresholdContactTime = 0f; // Time the sound has been above the threshold (0.1)
     private float requiredContactTime = 1f; // The required time for the sound to trigger the launch
     private GameObject ball; // Reference to the ball (will be found dynamically)
-    private bool hasStartedMicrophone = false; // Track whether the microphone has been started
-    private bool previousIsMineState = false; // Track the previous ownership state
+    private bool hasStartedMicrophone = false; // 用于跟踪麦克风是否已启动
+    private bool previousIsMineState = false; // 用于跟踪所有权的前一个状态
+
+    // Start the microphone and capture audio input
 
     void Start()
     {
-        // Check ownership status at the start
+        // 初次检查所有权状态
         if (photonView.IsMine)
         {
             StartMicrophone();
             previousIsMineState = true;
-            hasStartedMicrophone = true; // Mark that the microphone has been started
+            hasStartedMicrophone = true; // 标记麦克风已启动
         }
     }
 
     void Update()
     {
-        // Check for ownership changes
+        // 检查所有权状态是否发生变化
         if (photonView.IsMine && !previousIsMineState)
         {
-            // Ownership transferred to local client
+            // 如果所有权变成了本地客户端
             Debug.Log("Ownership transferred to local client.");
 
-            if (!hasStartedMicrophone) // Ensure the microphone starts only once
+            if (!hasStartedMicrophone) // 确保麦克风只启动一次
             {
                 StartMicrophone();
                 hasStartedMicrophone = true;
             }
 
-            previousIsMineState = true; // Update ownership state
+            previousIsMineState = true; // 更新状态
         }
 
-        // Only execute this logic if the object belongs to the local player and ball is in contact
+        // 只在本地客户端且球接触时进行音量检测
         if (photonView.IsMine && ballInContact && isListening)
         {
             float currentVolume = GetMicrophoneVolume();
             float amplifiedVolume = currentVolume * volumeMultiplier;
 
-            // Track the maximum volume
+            // 记录最大音量
             if (amplifiedVolume > maxVolume)
             {
                 maxVolume = amplifiedVolume;
             }
 
-            // Accumulate time when volume exceeds the threshold
+            // 只在音量超过阈值时累加时间
             if (amplifiedVolume > 0.1f)
             {
                 thresholdContactTime += Time.deltaTime;
             }
 
-            // Log information for debugging
+            // 调试信息
             Debug.Log($"Amplified Microphone Volume: {amplifiedVolume}, Time above 0.1: {thresholdContactTime}");
 
-            // Trigger the launch if threshold time is met
+            // 如果累加时间超过阈值且音量足够大，则发射球
             if (thresholdContactTime >= requiredContactTime)
             {
                 LaunchBall();
@@ -74,14 +77,15 @@ public class PlungerLauncher : MonoBehaviourPun
         }
     }
 
+
     void StartMicrophone()
     {
         if (Microphone.devices.Length > 0)
         {
-            microphoneDevice = Microphone.devices[0]; // Use the first available microphone
+            microphoneDevice = Microphone.devices[0]; // Use the first microphone device
             microphoneInput = Microphone.Start(microphoneDevice, true, 1, 96000);
             isListening = true;
-            Debug.Log("Microphone started!");
+            Debug.Log("microphone devices found!");
         }
         else
         {
@@ -114,15 +118,17 @@ public class PlungerLauncher : MonoBehaviourPun
         return Mathf.Sqrt(sum / samples.Length); // Return the RMS value
     }
 
+
+
     // Function to launch the ball based on the maximum detected volume
     private void LaunchBall()
     {
-        ball = GameObject.FindWithTag("Ball"); // Find the ball by its tag
+        ball = GameObject.FindWithTag("Ball");
         if (ball != null)
         {
             Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
             Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
-            float force = Mathf.Clamp(maxVolume, 0f, 1f) * 3f; // Apply a force scaled by maxVolume
+            float force = Mathf.Clamp(maxVolume, 0f, 1f) * 3f; // 3f is the maximum force
             ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
 
             Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);

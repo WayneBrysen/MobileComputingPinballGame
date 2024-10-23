@@ -44,3 +44,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3258153893
+    locked: 0
+  - name: Gyro_Ball
+    uniqueID: 3741311881
+    locked: 0
+  - name: 'Title/Button '
+    uniqueID: 2255920873
+    locked: 0
