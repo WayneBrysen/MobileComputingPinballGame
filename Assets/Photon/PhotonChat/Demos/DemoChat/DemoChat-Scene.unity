@@ -3266,10 +3266,10 @@ MonoBehaviour:
     The script IgnoreUiRaycastWhenInactive keeps inactive
     panels from blocking input.
 
-    
 
-    All users should use a UserId (to be
-    found as friend).
+
+    All users should use a UserId (to be found
+    as friend).
 
     This message will go away at runtime.'
 --- !u!222 &915497949
