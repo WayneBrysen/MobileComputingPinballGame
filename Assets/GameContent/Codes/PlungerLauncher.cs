@@ -14,61 +14,61 @@ public class PlungerLauncher : MonoBehaviourPun
     private float thresholdContactTime = 0f; // Time the sound has been above the threshold (0.1)
     private float requiredContactTime = 1f; // The required time for the sound to trigger the launch
     private GameObject ball; // Reference to the ball (will be found dynamically)
-    private bool hasStartedMicrophone = false; // ÓÃÓÚ¸ú×ÙÂó¿Ë·çÊÇ·ñÒÑÆô¶¯
-    private bool previousIsMineState = false; // ÓÃÓÚ¸ú×ÙËùÓÐÈ¨µÄÇ°Ò»¸ö×´Ì¬
+    private bool hasStartedMicrophone = false; // ç”¨äºŽè·Ÿè¸ªéº¦å…‹é£Žæ˜¯å¦å·²å¯åŠ¨
+    private bool previousIsMineState = false; // ç”¨äºŽè·Ÿè¸ªæ‰€æœ‰æƒçš„å‰ä¸€ä¸ªçŠ¶æ€
 
     // Start the microphone and capture audio input
 
     void Start()
     {
-        // ³õ´Î¼ì²éËùÓÐÈ¨×´Ì¬
+        // åˆæ¬¡æ£€æŸ¥æ‰€æœ‰æƒçŠ¶æ€
         if (photonView.IsMine)
         {
             StartMicrophone();
             previousIsMineState = true;
-            hasStartedMicrophone = true; // ±ê¼ÇÂó¿Ë·çÒÑÆô¶¯
+            hasStartedMicrophone = true; // æ ‡è®°éº¦å…‹é£Žå·²å¯åŠ¨
         }
     }
 
     void Update()
     {
-        // ¼ì²éËùÓÐÈ¨×´Ì¬ÊÇ·ñ·¢Éú±ä»¯
+        // æ£€æŸ¥æ‰€æœ‰æƒçŠ¶æ€æ˜¯å¦å‘ç”Ÿå˜åŒ–
         if (photonView.IsMine && !previousIsMineState)
         {
-            // Èç¹ûËùÓÐÈ¨±ä³ÉÁË±¾µØ¿Í»§¶Ë
+            // å¦‚æžœæ‰€æœ‰æƒå˜æˆäº†æœ¬åœ°å®¢æˆ·ç«¯
             Debug.Log("Ownership transferred to local client.");
 
-            if (!hasStartedMicrophone) // È·±£Âó¿Ë·çÖ»Æô¶¯Ò»´Î
+            if (!hasStartedMicrophone) // ç¡®ä¿éº¦å…‹é£Žåªå¯åŠ¨ä¸€æ¬¡
             {
                 StartMicrophone();
                 hasStartedMicrophone = true;
             }
 
-            previousIsMineState = true; // ¸üÐÂ×´Ì¬
+            previousIsMineState = true; // æ›´æ–°çŠ¶æ€
         }
 
-        // Ö»ÔÚ±¾µØ¿Í»§¶ËÇÒÇò½Ó´¥Ê±½øÐÐÒôÁ¿¼ì²â
+        // åªåœ¨æœ¬åœ°å®¢æˆ·ç«¯ä¸”çƒæŽ¥è§¦æ—¶è¿›è¡ŒéŸ³é‡æ£€æµ‹
         if (photonView.IsMine && ballInContact && isListening)
         {
             float currentVolume = GetMicrophoneVolume();
             float amplifiedVolume = currentVolume * volumeMultiplier;
 
-            // ¼ÇÂ¼×î´óÒôÁ¿
+            // è®°å½•æœ€å¤§éŸ³é‡
             if (amplifiedVolume > maxVolume)
             {
                 maxVolume = amplifiedVolume;
             }
 
-            // Ö»ÔÚÒôÁ¿³¬¹ýãÐÖµÊ±ÀÛ¼ÓÊ±¼ä
+            // åªåœ¨éŸ³é‡è¶…è¿‡é˜ˆå€¼æ—¶ç´¯åŠ æ—¶é—´
             if (amplifiedVolume > 0.1f)
             {
                 thresholdContactTime += Time.deltaTime;
             }
 
-            // µ÷ÊÔÐÅÏ¢
+            // è°ƒè¯•ä¿¡æ¯
             Debug.Log($"Amplified Microphone Volume: {amplifiedVolume}, Time above 0.1: {thresholdContactTime}");
 
-            // Èç¹ûÀÛ¼ÓÊ±¼ä³¬¹ýãÐÖµÇÒÒôÁ¿×ã¹»´ó£¬Ôò·¢ÉäÇò
+            // å¦‚æžœç´¯åŠ æ—¶é—´è¶…è¿‡é˜ˆå€¼ä¸”éŸ³é‡è¶³å¤Ÿå¤§ï¼Œåˆ™å‘å°„çƒ
             if (thresholdContactTime >= requiredContactTime)
             {
                 LaunchBall();
