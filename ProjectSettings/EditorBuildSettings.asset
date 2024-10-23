@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameContent/Scenes/UIScene/MainMenu.unity
     guid: 44aef4d9e0a2bff42b3ab6f33a1067eb
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameContent/Scenes/UIScene/CreateLobby.unity
     guid: 5ea0c90ab8a014b5eba700ef54c5857c
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameContent/Scenes/UIScene/JoinLobbyUI.unity
     guid: 8c13fa71cc5c842cc8b412043cacf175
   - enabled: 0
@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GameContent/Scenes/GameScene/MainGame_PC.unity
     guid: 93c6602a36113ef4ebaa8dd2cece375a
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameContent/Scenes/UIScene/Scoreboard.unity
     guid: acb4c73d43842d04cb143a96a8329eaa
   m_configObjects:
