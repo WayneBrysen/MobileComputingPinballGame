@@ -17,9 +17,13 @@ public class Loader : MonoBehaviour
                 ExitScene();
             } else if(string.Equals(buttonClicked.buttonName, "JOIN LOBBY")){
                 GoToJoinLobby();
+            } else if(string.Equals(buttonClicked.buttonName, "CREATE LOBBY")){
+                GoToCreateLobby();
             } else if(string.Equals(buttonClicked.buttonName, "menuButton")){
                 GoToMainMenu();
-            }
+            } else if(string.Equals(buttonClicked.buttonName, "Scoreboard")){
+                GoToScoreboard();
+            } 
         }
     }
 
@@ -28,10 +32,10 @@ public class Loader : MonoBehaviour
     
     public void ExitScene()
     {
-        StartCoroutine(ReturnToPreviousPage(SceneManager.GetActiveScene().buildIndex - 1));
+        StartCoroutine(ReturnToPreviousPage("MainMenu"));
     }
 
-    IEnumerator ReturnToPreviousPage(int pageNum)
+    IEnumerator ReturnToPreviousPage(string pageName)
     {
         //Play
         transition.SetTrigger("Start");
@@ -40,16 +44,38 @@ public class Loader : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         //Load
-        SceneManager.LoadScene(pageNum);
+        SceneManager.LoadScene(pageName);
     }
 
     public void GoToJoinLobby()
     {
-        SceneManager.LoadScene("LobbyUI");
+        StartCoroutine(GoToSelectedScene("JoinLobbyUI"));
+    }
+
+    public void GoToCreateLobby()
+    {
+        StartCoroutine(GoToSelectedScene("CreateLobby"));
     }
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(GoToSelectedScene("MainMenu"));
+    }
+
+    public void GoToScoreboard()
+    {
+        StartCoroutine(GoToSelectedScene("Scoreboard"));
+    }
+
+    IEnumerator GoToSelectedScene(string pageName)
+    {
+        //Play
+        transition.SetTrigger("Start");
+
+        //Wait
+        yield return new WaitForSeconds(transitionTime);
+
+        //Load
+        SceneManager.LoadScene(pageName);
     }
 }

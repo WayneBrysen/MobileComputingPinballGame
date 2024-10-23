@@ -22,9 +22,8 @@ public class FlipperScript : MonoBehaviourPun
         spring.spring = hitStrength;
         spring.damper = flipperDamper;
 
-        lastPosition = restPosition;  // 初始化为静止状态
+        lastPosition = restPosition;
 
-        // 调试日志，检查 PhotonView 的所有权
         if (photonView.IsMine)
         {
             Debug.Log(gameObject.name + " is controlled by this client.");
@@ -37,7 +36,6 @@ public class FlipperScript : MonoBehaviourPun
 
     void Update()
     {
-        // 只在本地客户端执行按键控制
         if (photonView.IsMine)
         {
             ControlFlipper();
@@ -46,18 +44,14 @@ public class FlipperScript : MonoBehaviourPun
 
     void ControlFlipper()
     {
-        // 获取当前按键状态
         float currentPosition = Input.GetAxis(inputName) == 1 ? pressedPosition : restPosition;
 
-        // 只有当按键状态发生改变时才进行 RPC 同步
         if (currentPosition != lastPosition)
         {
-            // 同步 flipper 的动作到所有客户端
             photonView.RPC("SyncFlipper", RpcTarget.All, currentPosition);
 
-            // 调试日志，检查按键输入和同步
             Debug.Log(gameObject.name + " Flipper input detected: " + inputName + " - Position: " + currentPosition);
-            lastPosition = currentPosition;  // 更新上一次的状态
+            lastPosition = currentPosition;
         }
     }
 
