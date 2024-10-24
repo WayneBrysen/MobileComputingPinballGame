@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private Vector3 p1BallPosition;
     private Vector3 p2BallPosition;
+
     void Start()
     {
         // 自动查找场景中的摄像机
@@ -191,6 +192,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     {
         var leftFlipper = controller.transform.Find("LeftFlipper").GetComponent<FlipperScript>();
         var rightFlipper = controller.transform.Find("RightFlipper").GetComponent<FlipperScript>();
+        var gameManager = controller.transform.Find("GameManager").GetComponent<FlipperTouchController>();
         var plungerScript = plunger.GetComponent<PlungerLauncher>();
 
         if (leftFlipper != null)
@@ -206,6 +208,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (plunger != null)
         {
             plungerScript.enabled = isEnabled;
+        }
+
+        if (gameManager != null)
+        {
+            gameManager.enabled = isEnabled;
         }
     }
 }

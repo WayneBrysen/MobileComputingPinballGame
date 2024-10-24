@@ -905,6 +905,154 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &375196943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 375196946}
+  - component: {fileID: 375196945}
+  - component: {fileID: 375196944}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &375196944
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375196943}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 40ab3a7e4e36423488e589303d63346f, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &375196945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375196943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86461150a6c483c44a5d0bef58753837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftFlipper: {fileID: 2112383332}
+  rightFlipper: {fileID: 1122922175}
+  audioSource: {fileID: 0}
+  maxVolume: 1
+  smoothSpeed: 5
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!4 &375196946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375196943}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 192.53973, y: 65.145454, z: 377.5924}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1180612480}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &407934805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1789,7 +1937,7 @@ GameObject:
   - component: {fileID: 857658752}
   - component: {fileID: 857658751}
   - component: {fileID: 857658750}
-  - component: {fileID: 857658749}
+  - component: {fileID: 857658756}
   - component: {fileID: 857658755}
   m_Layer: 0
   m_Name: RightFlipper
@@ -1813,23 +1961,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1270813296}
   m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
---- !u!114 &857658749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 857658747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5edfe3126e9c4dbcbdf0de986054d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restPosition: 0
-  pressedPosition: 45
-  hitStrength: 10000
-  flipperDamper: 150
-  inputName: RFlipper
 --- !u!59 &857658750
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -1989,6 +2120,24 @@ MonoBehaviour:
   sceneViewId: 5
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &857658756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857658747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c90ffa7237df8a4e9005437164502a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restPosition: 0
+  pressedPosition: 45
+  minHitStrength: 3000
+  maxHitStrength: 20000
+  flipperDamper: 150
+  smoothPressureSpeed: 5
 --- !u!43 &930071341
 Mesh:
   m_ObjectHideFlags: 0
@@ -2998,7 +3147,7 @@ GameObject:
   - component: {fileID: 1122922170}
   - component: {fileID: 1122922169}
   - component: {fileID: 1122922168}
-  - component: {fileID: 1122922167}
+  - component: {fileID: 1122922175}
   - component: {fileID: 1122922174}
   m_Layer: 0
   m_Name: RightFlipper
@@ -3007,23 +3156,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1122922167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122922165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5edfe3126e9c4dbcbdf0de986054d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restPosition: 0
-  pressedPosition: 45
-  hitStrength: 10000
-  flipperDamper: 150
-  inputName: RFlipper
 --- !u!59 &1122922168
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -3198,6 +3330,24 @@ MonoBehaviour:
   sceneViewId: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1122922175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122922165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c90ffa7237df8a4e9005437164502a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restPosition: 0
+  pressedPosition: 45
+  minHitStrength: 3000
+  maxHitStrength: 20000
+  flipperDamper: 150
+  smoothPressureSpeed: 5
 --- !u!1 &1126750651
 GameObject:
   m_ObjectHideFlags: 0
@@ -3619,6 +3769,154 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156578372}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1161713140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1161713143}
+  - component: {fileID: 1161713142}
+  - component: {fileID: 1161713141}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1161713141
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161713140}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 40ab3a7e4e36423488e589303d63346f, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1161713142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161713140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86461150a6c483c44a5d0bef58753837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftFlipper: {fileID: 1179813337}
+  rightFlipper: {fileID: 857658756}
+  audioSource: {fileID: 0}
+  maxVolume: 1
+  smoothSpeed: 5
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!4 &1161713143
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161713140}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: -195.82301, y: 65.145454, z: -371.2634}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1270813296}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1179813328
 GameObject:
   m_ObjectHideFlags: 0
@@ -3633,7 +3931,7 @@ GameObject:
   - component: {fileID: 1179813333}
   - component: {fileID: 1179813332}
   - component: {fileID: 1179813331}
-  - component: {fileID: 1179813330}
+  - component: {fileID: 1179813337}
   - component: {fileID: 1179813336}
   m_Layer: 0
   m_Name: LeftFlipper
@@ -3657,23 +3955,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1270813296}
   m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
---- !u!114 &1179813330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1179813328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5edfe3126e9c4dbcbdf0de986054d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restPosition: 0
-  pressedPosition: -45
-  hitStrength: 10000
-  flipperDamper: 150
-  inputName: LFlipper
 --- !u!59 &1179813331
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -3833,6 +4114,24 @@ MonoBehaviour:
   sceneViewId: 3
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1179813337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179813328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de637bed0734c9443872f8afbedb831f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restPosition: 0
+  pressedPosition: -45
+  minHitStrength: 3000
+  maxHitStrength: 20000
+  flipperDamper: 150
+  smoothPressureSpeed: 5
 --- !u!1 &1180612479
 GameObject:
   m_ObjectHideFlags: 0
@@ -3866,6 +4165,7 @@ Transform:
   - {fileID: 1122922173}
   - {fileID: 1122845714}
   - {fileID: 189958398}
+  - {fileID: 375196946}
   m_Father: {fileID: 945719573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1195758804
@@ -4005,6 +4305,7 @@ Transform:
   - {fileID: 857658748}
   - {fileID: 248644655}
   - {fileID: 1746710411}
+  - {fileID: 1161713143}
   m_Father: {fileID: 945719573}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1372776961
@@ -5750,7 +6051,7 @@ GameObject:
   - component: {fileID: 2112383328}
   - component: {fileID: 2112383327}
   - component: {fileID: 2112383326}
-  - component: {fileID: 2112383324}
+  - component: {fileID: 2112383332}
   - component: {fileID: 2112383331}
   m_Layer: 0
   m_Name: LeftFlipper
@@ -5774,23 +6075,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1180612480}
   m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
---- !u!114 &2112383324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112383322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c5edfe3126e9c4dbcbdf0de986054d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restPosition: 0
-  pressedPosition: -45
-  hitStrength: 10000
-  flipperDamper: 150
-  inputName: LFlipper
 --- !u!59 &2112383326
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -5950,6 +6234,24 @@ MonoBehaviour:
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &2112383332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112383322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de637bed0734c9443872f8afbedb831f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restPosition: 0
+  pressedPosition: -45
+  minHitStrength: 3000
+  maxHitStrength: 20000
+  flipperDamper: 150
+  smoothPressureSpeed: 5
 --- !u!1 &2129222276
 GameObject:
   m_ObjectHideFlags: 0
