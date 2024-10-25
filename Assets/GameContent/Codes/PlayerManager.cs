@@ -143,7 +143,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     void TransferFlipperOwnership(GameObject controller)
     {
-        // 转移控制器内的所有 PhotonView 的所有权
+        Debug.Log("开始转移控制权");
+
         var photonViews = controller.GetComponentsInChildren<PhotonView>();
         foreach (var view in photonViews)
         {
@@ -188,16 +189,22 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (leftFlipper != null)
         {
             leftFlipper.enabled = isEnabled;
+            Debug.Log("设置 leftFlipper");
+
         }
 
         if (rightFlipper != null)
         {
             rightFlipper.enabled = isEnabled;
+            Debug.Log("设置 rightFlipper");
+
         }
 
         if (gameManager != null)
         {
             gameManager.enabled = isEnabled;
+            Debug.Log("设置 GameManager");
+
         }
 
     }
