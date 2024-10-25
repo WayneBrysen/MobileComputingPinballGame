@@ -1632,11 +1632,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5576921c4443ed4428f8e756840d9bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nicknameInput: {fileID: 1101118870}
+  nicknameInput: {fileID: 1647566171}
   createInput: {fileID: 1101118870}
   joinInput: {fileID: 700512094}
-  createRoomButton: {fileID: 0}
-  joinRoomButton: {fileID: 0}
+  createRoomButton: {fileID: 1725258367}
+  joinRoomButton: {fileID: 675889009}
 --- !u!4 &903845079
 Transform:
   m_ObjectHideFlags: 0
