@@ -562,7 +562,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 903845078}
         m_TargetAssemblyTypeName: CreateAndJoinRooms, Assembly-CSharp
-        m_MethodName: CreateRoom
+        m_MethodName: SetPlayerNickname
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
