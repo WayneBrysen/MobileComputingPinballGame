@@ -1,63 +1,91 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
-public class RightFlipperControl : MonoBehaviour
+
+public class RightFlipperControl : MonoBehaviourPun
 {
     public float restPosition = 0f;
     public float pressedPosition = 45f;
     public float minHitStrength = 3000f;
-    public float maxHitStrength = 20000f; // 最大弹起力度
+    public float maxHitStrength = 20000f; // Maximum hit strength
     public float flipperDamper = 150f;
-    public float smoothPressureSpeed = 5f;      // 压力平滑过渡的速度
-    HingeJoint hinge;
+    public float smoothPressureSpeed = 5f; // Pressure smoothing speed
+    private HingeJoint hinge;
     private bool isPressed = false;
-    private float currentPressure = 0f;         // 当前的压力值
-    private float targetPressure = 0f;          // 目标压力值
+    private float currentPressure = 0f; // Current pressure value
+    private float targetPressure = 0f;  // Target pressure value
     private bool isDoublePoints = false;
+
+    private JointSpring spring;
+    private float lastPosition;
 
     void Start()
     {
         hinge = GetComponent<HingeJoint>();
         hinge.useSpring = true;
+
+        spring = new JointSpring
+        {
+            damper = flipperDamper
+        };
+
+        lastPosition = restPosition;
+
+        if (photonView.IsMine)
+        {
+            Debug.Log(gameObject.name + " is controlled by this client.");
+        }
+        else
+        {
+            Debug.Log(gameObject.name + " is controlled by another client.");
+        }
     }
 
-    // 按下时调用，根据触摸压力调节速度
     public void OnButtonPress(float touchPressure)
     {
         isPressed = true;
-        targetPressure = touchPressure;  // 设置触摸压力
+        targetPressure = touchPressure; // Set target pressure
     }
 
-    // 松开时调用
     public void OnButtonRelease()
     {
         isPressed = false;
-        targetPressure = 0f;  // 重置压力
+        targetPressure = 0f; // Reset pressure
     }
 
     void Update()
     {
+        if (photonView.IsMine)
+        {
+            ControlFlipper();
+        }
+    }
+
+    void ControlFlipper()
+    {
         currentPressure = Mathf.Lerp(currentPressure, targetPressure, Time.deltaTime * smoothPressureSpeed);
-        // 计算弹簧力度，确保在合理范围内
         float springForce = Mathf.Clamp(minHitStrength + 15000 * currentPressure, 5000, 20000);
 
-        JointSpring spring = new JointSpring
-        {
-            spring = springForce,  // 根据压力动态调整弹力
-            damper = flipperDamper
-        };
+        spring.spring = springForce;
+        spring.targetPosition = isPressed ? pressedPosition : restPosition;
 
-        Debug.Log("Right flipper: HitStrength: " + spring.spring);
+        if (spring.targetPosition != lastPosition)
+        {
+            photonView.RPC("SyncFlipper", RpcTarget.All, spring.targetPosition);
 
-        if (isPressed)
-        {
-            spring.targetPosition = pressedPosition;
-        }
-        else
-        {
-            spring.targetPosition = restPosition;
+            Debug.Log(gameObject.name + " Right Flipper: Position: " + spring.targetPosition);
+            lastPosition = spring.targetPosition;
         }
 
+        hinge.spring = spring;
+        hinge.useLimits = true;
+    }
+
+    [PunRPC]
+    void SyncFlipper(float targetPosition)
+    {
+        Debug.Log(gameObject.name + " received SyncFlipper RPC with position: " + targetPosition);
+
+        spring.targetPosition = targetPosition;
         hinge.spring = spring;
         hinge.useLimits = true;
     }
@@ -68,11 +96,8 @@ public class RightFlipperControl : MonoBehaviour
         Debug.Log("Right Flipper Double Points Mode: " + isActive);
     }
 
-    // 获取是否启用了双倍积分模式
     public bool IsDoublePointsActive()
     {
         return isDoublePoints;
     }
 }
-
-

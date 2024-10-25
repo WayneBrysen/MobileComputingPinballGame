@@ -181,8 +181,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     // 启用或禁用 flippers 的控制
     void SetFlippersControl(GameObject controller, bool isEnabled)
     {
-        var leftFlipper = controller.transform.Find("LeftFlipper").GetComponent<FlipperScript>();
-        var rightFlipper = controller.transform.Find("RightFlipper").GetComponent<FlipperScript>();
+        var leftFlipper = controller.transform.Find("LeftFlipper").GetComponent<LeftFlipperControl>();
+        var rightFlipper = controller.transform.Find("RightFlipper").GetComponent<RightFlipperControl>();
+        var gameManager = controller.transform.Find("GameManager").GetComponent<FlipperTouchController>();
 
         if (leftFlipper != null)
         {
@@ -192,6 +193,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (rightFlipper != null)
         {
             rightFlipper.enabled = isEnabled;
+        }
+
+        if (gameManager != null)
+        {
+            gameManager.enabled = isEnabled;
         }
 
     }
