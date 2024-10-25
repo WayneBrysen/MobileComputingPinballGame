@@ -70,8 +70,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.InRoom)
         {
-            Debug.Log("已经在房间中，手动调用 OnJoinedRoom()");
             OnJoinedRoom();
+            Debug.Log("已经在房间中，手动调用 OnJoinedRoom()");
         }
     }
 
