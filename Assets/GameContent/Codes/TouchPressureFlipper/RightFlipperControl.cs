@@ -81,7 +81,7 @@ public class RightFlipperControl : MonoBehaviourPun
     }
 
     [PunRPC]
-    void SyncRightFlipper(float targetPosition)
+    void SyncFlipper(float targetPosition)
     {
         Debug.Log(gameObject.name + " received SyncFlipper RPC with position: " + targetPosition);
 

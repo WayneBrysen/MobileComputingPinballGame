@@ -70,7 +70,7 @@ public class LeftFlipperControl : MonoBehaviourPun
 
         if (spring.targetPosition != lastPosition)
         {
-            photonView.RPC("SyncLeftFlipper", RpcTarget.All, spring.targetPosition);
+            photonView.RPC("SyncFlipper", RpcTarget.All, spring.targetPosition);
 
             Debug.Log(gameObject.name + " Left Flipper: Position: " + spring.targetPosition);
             lastPosition = spring.targetPosition;
@@ -81,7 +81,7 @@ public class LeftFlipperControl : MonoBehaviourPun
     }
 
     [PunRPC]
-    void SyncLeftFlipper(float targetPosition)
+    void SyncFlipper(float targetPosition)
     {
         Debug.Log(gameObject.name + " received SyncFlipper RPC with position: " + targetPosition);
 
