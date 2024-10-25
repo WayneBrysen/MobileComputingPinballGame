@@ -14,8 +14,6 @@ public class LeftFlipperControl : MonoBehaviour
     private float currentPressure = 0f;         // 当前的压力值
     private float targetPressure = 0f;          // 目标压力值
     private bool isDoublePoints = false;
-    public int scoreValue;  // 每次碰撞增加的分数
-    private GameManager gameManager;  // 引用ScoreManager
 
     void Start()
     {
@@ -42,6 +40,8 @@ public class LeftFlipperControl : MonoBehaviour
         currentPressure = Mathf.Lerp(currentPressure, targetPressure, Time.deltaTime * smoothPressureSpeed);
         // 计算弹簧力度，确保在合理范围内
         float springForce = Mathf.Clamp(minHitStrength + 15000 * currentPressure, 5000, 20000);
+
+        Debug.Log("Left flipper: currentPressure " + currentPressure);
 
         JointSpring spring = new JointSpring
         {

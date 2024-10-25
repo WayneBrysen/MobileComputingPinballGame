@@ -20,7 +20,7 @@ public class FlipperTouchController : MonoBehaviour
     private Renderer rightFlipperRenderer;
 
     private float volumeTimer = 0f;           // 计时器，用来记录音量达到9.99后的持续时间
-    private float volumeThreshold = 0.99f;    // 音量阈值，0.99
+    private float volumeThreshold = 0.9f;    // 音量阈值，0.99
     private float timeThreshold = 5f;         // 时间阈值，5秒
     private float doublePointsTimer = 0f;     // 双倍积分模式的持续时间
     private bool isDoublePointsActive = false; // 是否处于双倍积分模式
