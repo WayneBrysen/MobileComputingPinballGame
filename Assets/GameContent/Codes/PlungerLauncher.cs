@@ -128,7 +128,7 @@ public class PlungerLauncher : MonoBehaviourPun
         {
             Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
             Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
-            float force = Mathf.Clamp(maxVolume, 0f, 1f) * 3f; // 3f is the maximum force
+            float force = Mathf.Clamp(maxVolume, 0f, 1f) * 30f; // 3f is the maximum force
             ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
 
             Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);
