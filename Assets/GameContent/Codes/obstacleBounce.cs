@@ -21,7 +21,6 @@ public class ObstacleBounce : MonoBehaviour
         rightFlipper = FindObjectOfType<RightFlipperControl>();
     }
 
-    // 当小球碰到障碍物时触发
     void OnCollisionEnter(Collision collision)
     {
         Rigidbody ballRb = collision.collider.GetComponent<Rigidbody>();
@@ -31,7 +30,6 @@ public class ObstacleBounce : MonoBehaviour
             // 获取碰撞的法线方向
             Vector3 normal = collision.contacts[0].normal;
 
-            // 施加一次性反弹力，而不是直接改变速度
             ballRb.AddForce(-normal * bounceForce, ForceMode.Impulse);
 
             // Debug the name of the tag
