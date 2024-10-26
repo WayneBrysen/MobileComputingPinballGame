@@ -43,7 +43,17 @@ public class CountdownTimer : MonoBehaviourPunCallbacks
     [PunRPC]
     void OnCountdownEnd()
     {
-        // 在这里添加游戏结束的处理逻辑
         Debug.Log("倒计时结束，游戏结束！");
+
+        StartCoroutine(LoadScoreboardScene());
+
+    }
+
+    IEnumerator LoadScoreboardScene()
+    {
+        yield return new WaitForSeconds(1f);
+
+        // 加载 Scoreboard 场景
+        PhotonNetwork.LoadLevel("Scoreboard");
     }
 }
