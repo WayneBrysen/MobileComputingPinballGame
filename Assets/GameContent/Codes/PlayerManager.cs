@@ -70,8 +70,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.InRoom)
         {
-            Debug.Log("已经在房间中，手动调用 OnJoinedRoom()");
             OnJoinedRoom();
+            Debug.Log("已经在房间中，手动调用 OnJoinedRoom()");
         }
     }
 
@@ -143,7 +143,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     void TransferFlipperOwnership(GameObject controller)
     {
-        // 转移控制器内的所有 PhotonView 的所有权
+        Debug.Log("开始转移控制权");
+
         var photonViews = controller.GetComponentsInChildren<PhotonView>();
         foreach (var view in photonViews)
         {
@@ -181,17 +182,29 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     // 启用或禁用 flippers 的控制
     void SetFlippersControl(GameObject controller, bool isEnabled)
     {
-        var leftFlipper = controller.transform.Find("LeftFlipper").GetComponent<FlipperScript>();
-        var rightFlipper = controller.transform.Find("RightFlipper").GetComponent<FlipperScript>();
+        var leftFlipper = controller.transform.Find("LeftFlipper").GetComponent<LeftFlipperControl>();
+        var rightFlipper = controller.transform.Find("RightFlipper").GetComponent<RightFlipperControl>();
+        var gameManager = controller.transform.Find("GameManager").GetComponent<FlipperTouchController>();
 
         if (leftFlipper != null)
         {
             leftFlipper.enabled = isEnabled;
+            Debug.Log("设置 leftFlipper");
+
         }
 
         if (rightFlipper != null)
         {
             rightFlipper.enabled = isEnabled;
+            Debug.Log("设置 rightFlipper");
+
+        }
+
+        if (gameManager != null)
+        {
+            gameManager.enabled = isEnabled;
+            Debug.Log("设置 GameManager");
+
         }
 
     }
