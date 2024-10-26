@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObstacleBounce : MonoBehaviour
 {
-    public float bounceForce = 5f; // 每个障碍物的反弹力
-    public int scoreValue;  // 每次碰撞增加的分数
+    public float bounceForce = 5f;
+    public int scoreValue;
 
     private GameManager gameManager;  // 引用ScoreManager
     private LeftFlipperControl leftFlipper;
@@ -34,23 +34,6 @@ public class ObstacleBounce : MonoBehaviour
 
             // Debug the name of the tag
             Debug.Log("Collided with object tagged: " + this.gameObject.tag);
-
-            // Check the tag of obstacle which is being bounced
-            if (this.gameObject.tag == "ObstacleOne")
-            {
-                scoreValue = 50;  // ObstacleOne Score
-            }
-            else if (this.gameObject.tag == "ObstacleTwo")
-            {
-                scoreValue = 10;  // ObstacleTwo Score
-            }
-            else if (this.gameObject.tag == "ObstacleThree")
-            {
-                scoreValue = 5;   // ObstacleThree Score
-            }else
-            {
-                scoreValue = 1; // ObstacleFour Score
-            }
 
             // 检查 Flipper 的双倍积分状态
             if (leftFlipper != null && leftFlipper.IsDoublePointsActive() ||
