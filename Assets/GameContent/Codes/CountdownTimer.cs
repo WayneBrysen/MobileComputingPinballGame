@@ -45,10 +45,8 @@ public class CountdownTimer : MonoBehaviourPunCallbacks
     {
         Debug.Log("倒计时结束，游戏结束！");
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StartCoroutine(LoadScoreboardScene());
-        }
+        StartCoroutine(LoadScoreboardScene());
+
     }
 
     IEnumerator LoadScoreboardScene()
