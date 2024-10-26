@@ -70,9 +70,10 @@ public class RightFlipperControl : MonoBehaviourPun
 
         if (spring.targetPosition != lastPosition)
         {
-            photonView.RPC("SyncFlipper", RpcTarget.All, spring.targetPosition);
+            // ´«µÝ springForce
+            photonView.RPC("SyncFlipper", RpcTarget.All, spring.targetPosition, spring.spring);
 
-            Debug.Log(gameObject.name + " Right Flipper: Position: " + spring.targetPosition);
+            Debug.Log(gameObject.name + " Flipper: Position: " + spring.targetPosition + ", Spring Force: " + spring.spring);
             lastPosition = spring.targetPosition;
         }
 
@@ -81,11 +82,12 @@ public class RightFlipperControl : MonoBehaviourPun
     }
 
     [PunRPC]
-    void SyncFlipper(float targetPosition)
+    void SyncFlipper(float targetPosition, float springForce)
     {
-        Debug.Log(gameObject.name + " received SyncFlipper RPC with position: " + targetPosition);
+        Debug.Log(gameObject.name + " received SyncFlipper RPC with position: " + targetPosition + " and springForce: " + springForce);
 
         spring.targetPosition = targetPosition;
+        spring.spring = springForce;
         hinge.spring = spring;
         hinge.useLimits = true;
     }
