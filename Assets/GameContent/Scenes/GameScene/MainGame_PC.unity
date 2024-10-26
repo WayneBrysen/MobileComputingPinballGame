@@ -4489,7 +4489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myScoreText: {fileID: 2129222277}
-  opponentScoreText: {fileID: 0}
+  opponentScoreText: {fileID: 519947589}
 --- !u!4 &635885873
 Transform:
   m_ObjectHideFlags: 0
