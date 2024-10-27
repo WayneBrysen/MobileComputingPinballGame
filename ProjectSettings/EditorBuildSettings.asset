@@ -27,11 +27,11 @@ EditorBuildSettings:
     path: Assets/GameContent/Scenes/UIScene/BallChoosingUI.unity
     guid: dacc55e23bc9841d5a2b651a725a1467
   - enabled: 1
-    path: Assets/GameContent/Scenes/GameScene/MainGame_PC.unity
-    guid: 93c6602a36113ef4ebaa8dd2cece375a
-  - enabled: 1
     path: Assets/GameContent/Scenes/UIScene/Scoreboard.unity
     guid: acb4c73d43842d04cb143a96a8329eaa
+  - enabled: 1
+    path: Assets/GameContent/Scenes/GameScene/MainGame_PC.unity
+    guid: 57ebf02fd2d6a234294524ef9f5a1e61
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}
