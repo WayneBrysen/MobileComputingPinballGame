@@ -67,7 +67,7 @@ public class Loader : MonoBehaviour
 
     public void GoToScoreboard()
     {
-        StartCoroutine(GoToSelectedScene("Scoreboard"));
+        StartCoroutine(GoToSelectedScene("ScoreboardV2"));
     }
 
     IEnumerator GoToSelectedScene(string pageName)
