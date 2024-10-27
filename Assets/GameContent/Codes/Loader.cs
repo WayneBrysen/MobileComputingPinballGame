@@ -7,11 +7,12 @@ public class Loader : MonoBehaviour
 {
     
     public ButtonClicked buttonClicked;
+    public static string lobbyType;
     
     // Update is called once per frame
     void Update()
     {
-        if (buttonClicked.isClicked == true)
+        if (buttonClicked.isClicked != null && buttonClicked.isClicked == true)
         {
             if(string.Equals(buttonClicked.buttonName, "ExitButton")){
                 ExitScene();
@@ -49,12 +50,14 @@ public class Loader : MonoBehaviour
 
     public void GoToJoinLobby()
     {
-        StartCoroutine(GoToSelectedScene("JoinLobbyUI"));
+        lobbyType = "join";
+        StartCoroutine(GoToSelectedScene("Loading"));
     }
 
     public void GoToCreateLobby()
     {
-        StartCoroutine(GoToSelectedScene("CreateLobby"));
+        lobbyType = "create";
+        StartCoroutine(GoToSelectedScene("Loading"));
     }
 
     public void GoToMainMenu()
