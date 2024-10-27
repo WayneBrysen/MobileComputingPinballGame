@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GameContent/Scenes/UIScene/Scoreboard.unity
     guid: acb4c73d43842d04cb143a96a8329eaa
+  - enabled: 1
+    path: Assets/GameContent/Scenes/UIScene/ScoreboardV2.unity
+    guid: 207c53f51b39253468f2f301447c8ccb
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}
