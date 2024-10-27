@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Loader : MonoBehaviour
 {
@@ -33,6 +35,7 @@ public class Loader : MonoBehaviour
     
     public void ExitScene()
     {
+        PhotonNetwork.Disconnect();
         StartCoroutine(ReturnToPreviousPage("MainMenu"));
     }
 
