@@ -12,7 +12,7 @@ public class Loader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (buttonClicked.isClicked != null && buttonClicked.isClicked == true)
+        if (buttonClicked.isClicked == true)
         {
             if(string.Equals(buttonClicked.buttonName, "ExitButton")){
                 ExitScene();
