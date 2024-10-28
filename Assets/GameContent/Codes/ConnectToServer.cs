@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
+
+    public Loader loader;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +24,11 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        SceneManager.LoadScene("Lobby");
+        if(string.Equals(Loader.lobbyType,"join")){
+            SceneManager.LoadScene("JoinLobbyUI");
+        } else {
+            SceneManager.LoadScene("CreateLobby");
+        }
     }
 
 }

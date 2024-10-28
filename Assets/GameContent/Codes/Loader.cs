@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Loader : MonoBehaviour
 {
     
     public ButtonClicked buttonClicked;
+    public static string lobbyType;
     
     // Update is called once per frame
     void Update()
@@ -32,6 +35,7 @@ public class Loader : MonoBehaviour
     
     public void ExitScene()
     {
+        PhotonNetwork.Disconnect();
         StartCoroutine(ReturnToPreviousPage("MainMenu"));
     }
 
@@ -49,12 +53,14 @@ public class Loader : MonoBehaviour
 
     public void GoToJoinLobby()
     {
-        StartCoroutine(GoToSelectedScene("JoinLobbyUI"));
+        lobbyType = "join";
+        StartCoroutine(GoToSelectedScene("Loading"));
     }
 
     public void GoToCreateLobby()
     {
-        StartCoroutine(GoToSelectedScene("CreateLobby"));
+        lobbyType = "create";
+        StartCoroutine(GoToSelectedScene("Loading"));
     }
 
     public void GoToMainMenu()
@@ -64,7 +70,7 @@ public class Loader : MonoBehaviour
 
     public void GoToScoreboard()
     {
-        StartCoroutine(GoToSelectedScene("Scoreboard"));
+        StartCoroutine(GoToSelectedScene("ScoreboardV2"));
     }
 
     IEnumerator GoToSelectedScene(string pageName)
