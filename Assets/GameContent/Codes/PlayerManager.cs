@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
-    private Camera southPlayerCamera;
-    private Camera northPlayerCamera;
+    private GameObject southPlayerCamera;
+    private GameObject northPlayerCamera;
     private GameObject southController;
     private GameObject northController;
 
@@ -18,8 +18,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     void Start()
     {
         // 自动查找场景中的摄像机
-        southPlayerCamera = GameObject.FindWithTag("SouthCamera")?.GetComponent<Camera>();
-        northPlayerCamera = GameObject.FindWithTag("NorthCamera")?.GetComponent<Camera>();
+        southPlayerCamera = GameObject.FindWithTag("SouthCamera");
+        northPlayerCamera = GameObject.FindWithTag("NorthCamera");
+
+        if (southPlayerCamera == null)
+        {
+            Debug.LogWarning("South Camera not found!");
+        }
+
+        if (northPlayerCamera == null)
+        {
+            Debug.LogWarning("North Camera not found!");
+        }
 
         // 自动查找场景中的控制器
         southController = GameObject.Find("southController");
@@ -162,8 +172,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (isSouthSide)
         {
             Debug.Log("启用南侧玩家摄像机，禁用北侧玩家摄像机。");
-            southPlayerCamera.enabled = true;
-            northPlayerCamera.enabled = false;
+            if (southPlayerCamera != null) southPlayerCamera.SetActive(true);
+            if (northPlayerCamera != null) northPlayerCamera.SetActive(false);
 
             SetFlippersControl(southController, true);
             SetFlippersControl(northController, false);
@@ -171,8 +181,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         else
         {
             Debug.Log("启用北侧玩家摄像机，禁用南侧玩家摄像机。");
-            southPlayerCamera.enabled = false;
-            northPlayerCamera.enabled = true;
+            if (northPlayerCamera != null) northPlayerCamera.SetActive(true);
+            if (southPlayerCamera != null) southPlayerCamera.SetActive(false);
 
             SetFlippersControl(northController, true);
             SetFlippersControl(southController, false);

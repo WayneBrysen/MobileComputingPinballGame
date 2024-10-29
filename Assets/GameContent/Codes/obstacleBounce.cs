@@ -7,7 +7,7 @@ public class ObstacleBounce : MonoBehaviour
     public float bounceForce = 5f;
     public int scoreValue;
 
-    private GameManager gameManager;  // ÒýÓÃScoreManager
+    private GameManager gameManager; 
     private LeftFlipperControl leftFlipper;
     private RightFlipperControl rightFlipper;
 

@@ -13824,6 +13824,7 @@ GameObject:
   - component: {fileID: 1955821071}
   - component: {fileID: 1955821070}
   - component: {fileID: 1955821069}
+  - component: {fileID: 1955821073}
   m_Layer: 0
   m_Name: southPlayerCamera
   m_TagString: SouthCamera
@@ -13949,6 +13950,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+--- !u!114 &1955821073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955821068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d03dc40c5d933646a2d04c1a36bb394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1959243290
 GameObject:
   m_ObjectHideFlags: 0
@@ -14266,6 +14279,7 @@ GameObject:
   - component: {fileID: 1996663808}
   - component: {fileID: 1996663806}
   - component: {fileID: 1996663810}
+  - component: {fileID: 1996663811}
   m_Layer: 0
   m_Name: northPlayerCamera
   m_TagString: NorthCamera
@@ -14391,6 +14405,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996663805}
   m_Enabled: 1
+--- !u!114 &1996663811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996663805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d03dc40c5d933646a2d04c1a36bb394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2005097872
 PrefabInstance:
   m_ObjectHideFlags: 0
