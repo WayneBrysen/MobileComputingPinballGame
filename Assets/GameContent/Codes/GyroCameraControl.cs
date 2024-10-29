@@ -17,7 +17,14 @@ public class GyroCameraControl : MonoBehaviourPunCallbacks
 
         if (photonView.IsMine)
         {
-            Input.gyro.enabled = true;
+            if (SystemInfo.supportsGyroscope)
+            {
+                Input.gyro.enabled = true;
+            }
+            else
+            {
+                Debug.LogWarning("Device does not support gyroscope.");
+            }
         }
     }
 
