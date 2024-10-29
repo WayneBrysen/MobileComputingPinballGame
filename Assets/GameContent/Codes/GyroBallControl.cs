@@ -4,21 +4,33 @@ using UnityEngine;
 
 public class GyroBallControl : MonoBehaviour
 {
+    public float gravityMultiplier = 9.81f;
+    private Vector3 originalGravity;
 
-    // Start is called before the first frame update
-     void Start()
+    void Start()
     {
+        // 启用陀螺仪
         Input.gyro.enabled = true;
+
+        // 记录原本的全局重力值
+        originalGravity = Physics.gravity;
     }
 
-    // Update is called once per frame
-     void Update()
+    void FixedUpdate()
     {
         if (Input.gyro.enabled)
         {
-            Debug.Log(Input.gyro.attitude);
-            transform.rotation = Input.gyro.attitude;
+            // 获取设备倾斜的方向
+            Vector3 tilt = Input.gyro.gravity;
 
+            // 更新全局重力
+            Physics.gravity = new Vector3(tilt.x, -tilt.z, tilt.y) * gravityMultiplier;
         }
+    }
+
+    void OnDestroy()
+    {
+        // 恢复原本的全局重力
+        Physics.gravity = originalGravity;
     }
 }

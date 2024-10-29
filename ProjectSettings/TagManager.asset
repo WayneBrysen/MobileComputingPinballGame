@@ -7,6 +7,8 @@ TagManager:
   - Ball
   - SouthCamera
   - NorthCamera
+  - BlueBall
+  - RedBall
   layers:
   - Default
   - TransparentFX
