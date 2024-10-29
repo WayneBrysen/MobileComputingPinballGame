@@ -26,7 +26,7 @@ public class PlungerLauncher : MonoBehaviourPun
             gameObject.SetActive(false);
             return;
         }
-        else
+        else if (photonView.IsMine)
         {
             StartMicrophone();
             hasStartedMicrophone = true;
@@ -76,42 +76,55 @@ public class PlungerLauncher : MonoBehaviourPun
 
     void StartMicrophone()
     {
-        if (Microphone.devices.Length > 0)
+        if (photonView.IsMine)
         {
-            microphoneDevice = Microphone.devices[0]; // Use the first microphone device
-            microphoneInput = Microphone.Start(microphoneDevice, true, 1, 96000);
-            isListening = true;
-            Debug.Log("microphone devices found!");
+            if (Microphone.devices.Length > 0)
+            {
+                microphoneDevice = Microphone.devices[0]; // Use the first microphone device
+                microphoneInput = Microphone.Start(microphoneDevice, true, 1, 96000);
+                isListening = true;
+                Debug.Log("microphone devices found!");
+            }
+            else
+            {
+                Debug.LogError("No microphone devices found!");
+            }
         }
-        else
-        {
-            Debug.LogError("No microphone devices found!");
-        }
+
     }
 
     // Stop the microphone input
     void StopMicrophone()
     {
-        if (isListening)
+        if (photonView.IsMine)
         {
-            Microphone.End(microphoneDevice);
-            isListening = false;
+            if (isListening)
+            {
+                Microphone.End(microphoneDevice);
+                isListening = false;
+            }
         }
     }
 
     // Calculate the current volume from the microphone input
     float GetMicrophoneVolume()
     {
-        float[] samples = new float[512]; // Create a buffer for the samples
-        microphoneInput.GetData(samples, 0); // Get the microphone data
-        float sum = 0f;
 
-        foreach (float sample in samples)
+        if (photonView.IsMine)
         {
-            sum += sample * sample; // Calculate RMS (Root Mean Square) value for the sound
+            float[] samples = new float[512]; // Create a buffer for the samples
+            microphoneInput.GetData(samples, 0); // Get the microphone data
+            float sum = 0f;
+
+            foreach (float sample in samples)
+            {
+                sum += sample * sample; // Calculate RMS (Root Mean Square) value for the sound
+            }
+
+            return Mathf.Sqrt(sum / samples.Length); // Return the RMS value
         }
 
-        return Mathf.Sqrt(sum / samples.Length); // Return the RMS value
+        return 0.0f;
     }
 
 
@@ -119,47 +132,61 @@ public class PlungerLauncher : MonoBehaviourPun
     // Function to launch the ball based on the maximum detected volume
     private void LaunchBall()
     {
-        ball = GameObject.FindWithTag("Ball");
-        if (ball != null)
+        if (photonView.IsMine)
         {
-            Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
-            Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
-            float force = Mathf.Clamp(maxVolume, 0f, 1f) * 30f; // 3f is the maximum force
-            ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
+            ball = GameObject.FindWithTag("Ball");
+            if (ball != null)
+            {
+                Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
+                Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
+                float force = Mathf.Clamp(maxVolume, 0f, 1f) * 30f; // 3f is the maximum force
+                ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
 
-            Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);
-        }
-        else
-        {
-            Debug.LogError("No ball found with the tag 'Ball'");
+                Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);
+            }
+            else
+            {
+                Debug.LogError("No ball found with the tag 'Ball'");
+            }
         }
     }
 
     // Reset the contact time and maximum volume
     private void ResetContact()
     {
-        contactTime = 0f;
-        thresholdContactTime = 0f;
-        maxVolume = 0f;
+        if (photonView.IsMine)
+        {
+            contactTime = 0f;
+            thresholdContactTime = 0f;
+            maxVolume = 0f;
+        }
     }
 
     // Detect if the ball is in contact with the plunger using Collision
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ball"))
+        if (photonView.IsMine)
         {
-            ballInContact = true; // Ball is in contact with the plunger
-            ResetContact(); // Reset the variables when contact begins
+            if (collision.gameObject.CompareTag("Ball"))
+            {
+                ballInContact = true; // Ball is in contact with the plunger
+                ResetContact(); // Reset the variables when contact begins
+            }
         }
+
+
     }
 
     // Detect when the ball leaves the contact with the plunger using Collision
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ball"))
+        if (photonView.IsMine)
         {
-            ballInContact = false; // Ball is no longer in contact with the plunger
-            ResetContact(); // Reset contact state when the ball leaves
+            if (collision.gameObject.CompareTag("Ball"))
+            {
+                ballInContact = false; // Ball is no longer in contact with the plunger
+                ResetContact(); // Reset contact state when the ball leaves
+            }
         }
     }
 }
