@@ -14,61 +14,57 @@ public class PlungerLauncher : MonoBehaviourPun
     private float thresholdContactTime = 0f; // Time the sound has been above the threshold (0.1)
     private float requiredContactTime = 1f; // The required time for the sound to trigger the launch
     private GameObject ball; // Reference to the ball (will be found dynamically)
-    private bool hasStartedMicrophone = false; // 用于跟踪麦克风是否已启动
-    private bool previousIsMineState = false; // 用于跟踪所有权的前一个状态
+    private bool hasStartedMicrophone = false;
+    private bool previousIsMineState = false;
 
     // Start the microphone and capture audio input
 
     void Start()
     {
-        // 初次检查所有权状态
-        if (photonView.IsMine)
+        if (!photonView.IsMine)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        else
         {
             StartMicrophone();
-            previousIsMineState = true;
-            hasStartedMicrophone = true; // 标记麦克风已启动
+            hasStartedMicrophone = true;
         }
     }
 
     void Update()
     {
-        // 检查所有权状态是否发生变化
-        if (photonView.IsMine && !previousIsMineState)
+        if (photonView.IsMine)
         {
-            // 如果所有权变成了本地客户端
             Debug.Log("Ownership transferred to local client.");
 
-            if (!hasStartedMicrophone) // 确保麦克风只启动一次
+            if (!hasStartedMicrophone)
             {
                 StartMicrophone();
                 hasStartedMicrophone = true;
             }
 
-            previousIsMineState = true; // 更新状态
+            previousIsMineState = true;
         }
 
-        // 只在本地客户端且球接触时进行音量检测
         if (photonView.IsMine && ballInContact && isListening)
         {
             float currentVolume = GetMicrophoneVolume();
             float amplifiedVolume = currentVolume * volumeMultiplier;
 
-            // 记录最大音量
             if (amplifiedVolume > maxVolume)
             {
                 maxVolume = amplifiedVolume;
             }
 
-            // 只在音量超过阈值时累加时间
             if (amplifiedVolume > 0.1f)
             {
                 thresholdContactTime += Time.deltaTime;
             }
 
-            // 调试信息
             Debug.Log($"Amplified Microphone Volume: {amplifiedVolume}, Time above 0.1: {thresholdContactTime}");
 
-            // 如果累加时间超过阈值且音量足够大，则发射球
             if (thresholdContactTime >= requiredContactTime)
             {
                 LaunchBall();
