@@ -26,7 +26,7 @@ public class PlungerLauncher : MonoBehaviourPun
             gameObject.SetActive(false);
             return;
         }
-        else if (photonView.IsMine)
+        else
         {
             StartMicrophone();
             hasStartedMicrophone = true;
@@ -35,19 +35,6 @@ public class PlungerLauncher : MonoBehaviourPun
 
     void Update()
     {
-        if (photonView.IsMine)
-        {
-            Debug.Log("Ownership transferred to local client.");
-
-            if (!hasStartedMicrophone)
-            {
-                StartMicrophone();
-                hasStartedMicrophone = true;
-            }
-
-            previousIsMineState = true;
-        }
-
         if (photonView.IsMine && ballInContact && isListening)
         {
             float currentVolume = GetMicrophoneVolume();
@@ -76,19 +63,16 @@ public class PlungerLauncher : MonoBehaviourPun
 
     void StartMicrophone()
     {
-        if (photonView.IsMine)
+        if (Microphone.devices.Length > 0)
         {
-            if (Microphone.devices.Length > 0)
-            {
-                microphoneDevice = Microphone.devices[0]; // Use the first microphone device
-                microphoneInput = Microphone.Start(microphoneDevice, true, 1, 96000);
-                isListening = true;
-                Debug.Log("microphone devices found!");
-            }
-            else
-            {
-                Debug.LogError("No microphone devices found!");
-            }
+            microphoneDevice = Microphone.devices[0]; // Use the first microphone device
+            microphoneInput = Microphone.Start(microphoneDevice, true, 1, 96000);
+            isListening = true;
+            Debug.Log("microphone devices found!");
+        }
+        else
+        {
+            Debug.LogError("No microphone devices found!");
         }
 
     }
@@ -96,35 +80,26 @@ public class PlungerLauncher : MonoBehaviourPun
     // Stop the microphone input
     void StopMicrophone()
     {
-        if (photonView.IsMine)
+        if (isListening)
         {
-            if (isListening)
-            {
-                Microphone.End(microphoneDevice);
-                isListening = false;
-            }
+            Microphone.End(microphoneDevice);
+            isListening = false;
         }
     }
 
     // Calculate the current volume from the microphone input
     float GetMicrophoneVolume()
     {
+        float[] samples = new float[512]; // Create a buffer for the samples
+        microphoneInput.GetData(samples, 0); // Get the microphone data
+        float sum = 0f;
 
-        if (photonView.IsMine)
+        foreach (float sample in samples)
         {
-            float[] samples = new float[512]; // Create a buffer for the samples
-            microphoneInput.GetData(samples, 0); // Get the microphone data
-            float sum = 0f;
-
-            foreach (float sample in samples)
-            {
-                sum += sample * sample; // Calculate RMS (Root Mean Square) value for the sound
-            }
-
-            return Mathf.Sqrt(sum / samples.Length); // Return the RMS value
+            sum += sample * sample; // Calculate RMS (Root Mean Square) value for the sound
         }
 
-        return 0.0f;
+        return Mathf.Sqrt(sum / samples.Length); // Return the RMS value
     }
 
 
@@ -132,61 +107,47 @@ public class PlungerLauncher : MonoBehaviourPun
     // Function to launch the ball based on the maximum detected volume
     private void LaunchBall()
     {
-        if (photonView.IsMine)
+        ball = GameObject.FindWithTag("Ball");
+        if (ball != null)
         {
-            ball = GameObject.FindWithTag("Ball");
-            if (ball != null)
-            {
-                Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
-                Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
-                float force = Mathf.Clamp(maxVolume, 0f, 1f) * 30f; // 3f is the maximum force
-                ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
+            Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
+            Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
+            float force = Mathf.Clamp(maxVolume, 0f, 1f) * 30f; // 3f is the maximum force
+            ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
 
-                Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);
-            }
-            else
-            {
-                Debug.LogError("No ball found with the tag 'Ball'");
-            }
+            Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);
+        }
+        else
+        {
+            Debug.LogError("No ball found with the tag 'Ball'");
         }
     }
 
     // Reset the contact time and maximum volume
     private void ResetContact()
     {
-        if (photonView.IsMine)
-        {
-            contactTime = 0f;
-            thresholdContactTime = 0f;
-            maxVolume = 0f;
-        }
+        contactTime = 0f;
+        thresholdContactTime = 0f;
+        maxVolume = 0f;
     }
 
     // Detect if the ball is in contact with the plunger using Collision
     private void OnCollisionEnter(Collision collision)
     {
-        if (photonView.IsMine)
+        if (collision.gameObject.CompareTag("Ball"))
         {
-            if (collision.gameObject.CompareTag("Ball"))
-            {
-                ballInContact = true; // Ball is in contact with the plunger
-                ResetContact(); // Reset the variables when contact begins
-            }
+            ballInContact = true; // Ball is in contact with the plunger
+            ResetContact(); // Reset the variables when contact begins
         }
-
-
     }
 
     // Detect when the ball leaves the contact with the plunger using Collision
     private void OnCollisionExit(Collision collision)
     {
-        if (photonView.IsMine)
+        if (collision.gameObject.CompareTag("Ball"))
         {
-            if (collision.gameObject.CompareTag("Ball"))
-            {
-                ballInContact = false; // Ball is no longer in contact with the plunger
-                ResetContact(); // Reset contact state when the ball leaves
-            }
+            ballInContact = false; // Ball is no longer in contact with the plunger
+            ResetContact(); // Reset contact state when the ball leaves
         }
     }
 }
