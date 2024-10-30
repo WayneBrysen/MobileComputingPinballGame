@@ -25,10 +25,25 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         if(string.Equals(Loader.lobbyType,"join")){
-            SceneManager.LoadScene("JoinLobbyUI");
+            StartCoroutine(GoToSelectedScene("JoinLobbyUI"));
         } else {
-            SceneManager.LoadScene("CreateLobby");
+            StartCoroutine(GoToSelectedScene("CreateLobby"));
         }
+    }
+
+    public Animator transition;
+    public float transitionTime = 1f;
+
+    IEnumerator GoToSelectedScene(string pageName)
+    {
+        //Play
+        transition.SetTrigger("Start");
+
+        //Wait
+        yield return new WaitForSeconds(transitionTime);
+
+        //Load
+        SceneManager.LoadScene(pageName);
     }
 
 }
