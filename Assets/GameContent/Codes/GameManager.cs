@@ -80,6 +80,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    public void SaveFinalScore()
+    {
+    PlayerPrefs.SetInt("FinalScore", score); // Save the score to PlayerPrefs
+    PlayerPrefs.Save(); // Ensure the score is saved
+    }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {

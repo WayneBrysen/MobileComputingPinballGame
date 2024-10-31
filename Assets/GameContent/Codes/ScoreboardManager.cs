@@ -8,36 +8,55 @@ using System.Collections.Generic;
 
 public class ScoreboardManager : MonoBehaviourPunCallbacks
 {
-    public GameObject scoreForRank1; // ScoreForRank_1 ¶ÔÏóµÄÒýÓÃ
-    public GameObject scoreForRank2; // ScoreForRank_2 ¶ÔÏóµÄÒýÓÃ
+    public GameObject scoreForRank1; // ScoreForRank_1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public GameObject scoreForRank2; // ScoreForRank_2 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+    public TextMeshProUGUI finalScoreText; // Reference to the UI Text object for displaying the final score
+    public TextMeshProUGUI scoreOnlyText;
 
     void Start()
     {
-        // µÈ´ýËùÓÐÍæ¼Ò¶¼¼ÓÔØÁË³¡¾°
+        // ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½
         StartCoroutine(WaitForPlayersAndDisplayScores());
+        
+        DisplayFinalScore();
     }
 
     IEnumerator WaitForPlayersAndDisplayScores()
     {
-        // µÈ´ýÖ±µ½ËùÓÐÍæ¼Ò¶¼ÔÚ·¿¼äÖÐ
+        // ï¿½È´ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½
         while (PhotonNetwork.PlayerList.Length < 2)
         {
             yield return null;
         }
 
-        // µÈ´ýÒ»Ð¡¶ÎÊ±¼ä£¬È·±£ËùÓÐ Custom Properties ÒÑ¸üÐÂ
+        // ï¿½È´ï¿½Ò»Ð¡ï¿½ï¿½Ê±ï¿½ä£¬È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Custom Properties ï¿½Ñ¸ï¿½ï¿½ï¿½
         yield return new WaitForSeconds(0.5f);
 
-        // ÏÔÊ¾·ÖÊý
+        // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
         DisplayScores();
+    }
+    void DisplayFinalScore()
+    {
+        int placeholderScore = 1234; 
+        // Retrieve the final score from PlayerPrefs and display it
+        int finalScore = PlayerPrefs.GetInt("FinalScore", 0); // Default to 0 if no score found
+        if (finalScoreText != null)
+        {
+            finalScoreText.text = "Final Score: " + finalScore.ToString();
+        }
+        if (scoreOnlyText != null)
+        {
+            scoreOnlyText.text = finalScore.ToString();
+        }
     }
 
     void DisplayScores()
     {
-        // ´´½¨Ò»¸öÁÐ±íÀ´´æ´¢Íæ¼ÒµÄ·ÖÊýÊý¾Ý
+        // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ÒµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         List<PlayerScoreData> playerScores = new List<PlayerScoreData>();
 
-        // ±éÀúËùÓÐÍæ¼Ò£¬»ñÈ¡ËûÃÇµÄ·ÖÊý
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò£ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ÇµÄ·ï¿½ï¿½ï¿½
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             int score = 0;
@@ -49,10 +68,10 @@ public class ScoreboardManager : MonoBehaviourPunCallbacks
             playerScores.Add(new PlayerScoreData(player.NickName, score));
         }
 
-        // ¸ù¾Ý·ÖÊý´Ó¸ßµ½µÍÅÅÐò
+        // ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ï¿½Ó¸ßµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         playerScores.Sort((x, y) => y.score.CompareTo(x.score));
 
-        // ¸üÐÂ UI ÏÔÊ¾
+        // ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½Ê¾
         if (playerScores.Count >= 1)
         {
             UpdateScoreUI(scoreForRank1, "1", playerScores[0]);
@@ -75,7 +94,7 @@ public class ScoreboardManager : MonoBehaviourPunCallbacks
         scoreText.text = playerData.score.ToString();
     }
 
-    // ¸¨ÖúÀà£¬ÓÃÓÚ´æ´¢Íæ¼ÒÊý¾Ý
+    // ï¿½ï¿½ï¿½ï¿½ï¿½à£¬ï¿½ï¿½ï¿½Ú´æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     class PlayerScoreData
     {
         public string nickName;
