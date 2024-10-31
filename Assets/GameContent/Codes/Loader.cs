@@ -26,7 +26,9 @@ public class Loader : MonoBehaviour
                 GoToMainMenu();
             } else if(string.Equals(buttonClicked.buttonName, "Scoreboard")){
                 GoToScoreboard();
-            } 
+            } else if(string.Equals(buttonClicked.buttonName, "Quit")){
+                ExitGame();
+            }
         }
     }
 
@@ -71,6 +73,11 @@ public class Loader : MonoBehaviour
     public void GoToScoreboard()
     {
         StartCoroutine(GoToSelectedScene("ScoreboardV2"));
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 
     IEnumerator GoToSelectedScene(string pageName)
