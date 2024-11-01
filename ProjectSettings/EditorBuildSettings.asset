@@ -35,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GameContent/Scenes/GameScene/MainGame_PC.unity
     guid: 57ebf02fd2d6a234294524ef9f5a1e61
+  - enabled: 0
+    path: Assets/GameContent/Scenes/GameScene/MainGame_PC 2.unity
+    guid: 6a6250ba785639c47a991602cc67b8ca
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

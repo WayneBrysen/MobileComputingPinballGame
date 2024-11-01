@@ -9,6 +9,10 @@ TagManager:
   - NorthCamera
   - BlueBall
   - RedBall
+  - SouthHand
+  - NorthHand
+  - SouthTrigger
+  - NorthTrigger
   layers:
   - Default
   - TransparentFX

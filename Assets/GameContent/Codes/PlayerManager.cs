@@ -8,6 +8,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private GameObject northPlayerCamera;
     private GameObject southController;
     private GameObject northController;
+    private GameObject southHandLaunch;
+    private GameObject northHandLaunch;
+    private GameObject southTrigger;
+    private GameObject northTrigger;
 
     private Vector3 p1BallPosition;
     private Vector3 p2BallPosition;
@@ -31,6 +35,32 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             Debug.LogWarning("North Camera not found!");
         }
 
+        // find handlaunch in the scene
+        southHandLaunch = GameObject.FindWithTag("SouthHand");
+        northHandLaunch = GameObject.FindWithTag("NorthHand");
+        southTrigger = GameObject.FindWithTag("SouthTrigger");
+        northTrigger = GameObject.FindWithTag("NorthTrigger");
+
+        if (southHandLaunch == null)
+        {
+            Debug.LogWarning("South HandLaunch not found!");
+        }
+
+        if (northHandLaunch == null)
+        {
+            Debug.LogWarning("North HandLaunch not found!");
+        }
+
+        if (southTrigger == null)
+        {
+            Debug.LogWarning("South Trigger not found!");
+        }
+
+        if (northTrigger == null)
+        {
+            Debug.LogWarning("North Trigger not found!");
+        }
+
         // 自动查找场景中的控制器
         southController = GameObject.Find("southController");
         northController = GameObject.Find("northController");
@@ -40,7 +70,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         GameObject p1PlungerPositionObj = GameObject.Find("p1PlungerPosition");
         GameObject p2PlungerPositionObj = GameObject.Find("p2PlungerPosition");
-
 
         if (p1PlungerPositionObj != null)
         {
@@ -68,6 +97,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         Debug.Log("North Camera: " + (northPlayerCamera != null ? "Found" : "Not Found"));
         Debug.Log("South Controller: " + (southController != null ? "Found" : "Not Found"));
         Debug.Log("North Controller: " + (northController != null ? "Found" : "Not Found"));
+        Debug.Log("South HandLaunch: " + (southHandLaunch != null ? "Found" : "Not Found"));
+        Debug.Log("North HandLaunch: " + (northHandLaunch != null ? "Found" : "Not Found"));
 
         if (photonView.IsMine)
         {
@@ -166,6 +197,26 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
+    void TransferObjectOwnership(GameObject obj)
+    {
+        if (obj == null)
+        {
+            Debug.LogWarning("Object is null, cannot transfer ownership.");
+            return;
+        }
+
+        PhotonView photonView = obj.GetComponent<PhotonView>();
+        if (photonView != null && photonView.Owner != PhotonNetwork.LocalPlayer)
+        {
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+            Debug.Log("Transferred ownership of " + obj.name + " to " + PhotonNetwork.LocalPlayer.NickName);
+        }
+        else if (photonView == null)
+        {
+            Debug.LogWarning("PhotonView not found on " + obj.name);
+        }
+    }
+
 
     void SetPlayerPosition(bool isSouthSide)
     {
@@ -175,8 +226,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             if (southPlayerCamera != null) southPlayerCamera.SetActive(true);
             if (northPlayerCamera != null) northPlayerCamera.SetActive(false);
 
+            if (southHandLaunch != null) southHandLaunch.SetActive(true);
+            if (northHandLaunch != null) northHandLaunch.SetActive(false);
+
+            if (southTrigger != null) southTrigger.SetActive(true);
+            if (northTrigger != null) northTrigger.SetActive(false);
+
             SetFlippersControl(southController, true);
             SetFlippersControl(northController, false);
+
+            // 转移 southHandLaunch 和 southTrigger 的权限给南侧玩家
+            TransferObjectOwnership(southHandLaunch);
+            TransferObjectOwnership(southTrigger);
         }
         else
         {
@@ -184,8 +245,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             if (northPlayerCamera != null) northPlayerCamera.SetActive(true);
             if (southPlayerCamera != null) southPlayerCamera.SetActive(false);
 
+            if (northHandLaunch != null) northHandLaunch.SetActive(true);
+            if (southHandLaunch != null) southHandLaunch.SetActive(false);
+
+            if (northTrigger != null) northTrigger.SetActive(true);
+            if (southTrigger != null) southTrigger.SetActive(false);
+
             SetFlippersControl(northController, true);
             SetFlippersControl(southController, false);
+
+            // 转移 northHandLaunch 和 northTrigger 的权限给北侧玩家
+            TransferObjectOwnership(northHandLaunch);
+            TransferObjectOwnership(northTrigger);
         }
     }
 

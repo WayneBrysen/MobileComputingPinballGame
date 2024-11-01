@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
+using System.Collections.Generic;
 
 
 public class PlungerLauncher : MonoBehaviourPun
@@ -35,6 +37,7 @@ public class PlungerLauncher : MonoBehaviourPun
 
     void Update()
     {
+
         if (photonView.IsMine && ballInContact && isListening)
         {
             float currentVolume = GetMicrophoneVolume();
