@@ -17,6 +17,8 @@ public class PlungerLauncher : MonoBehaviourPun
     private bool hasStartedMicrophone = false;
     private bool previousIsMineState = false;
 
+    public GameObject playerBall;
+
     // Start the microphone and capture audio input
 
     void Start()
@@ -107,46 +109,45 @@ public class PlungerLauncher : MonoBehaviourPun
     // Function to launch the ball based on the maximum detected volume
     private void LaunchBall()
     {
-        ball = GameObject.FindWithTag("Ball");
-        if (ball != null)
+        if (playerBall != null)
         {
-            Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
-            Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
+            Rigidbody ballRigidbody = playerBall.GetComponent<Rigidbody>();
+            Vector3 launchDirection = (playerBall.transform.position - this.transform.position).normalized;
             float force = Mathf.Clamp(maxVolume, 0f, 1f) * 30f;
 
-           
-            PhotonView ballPhotonView = ball.GetComponent<PhotonView>();
+            // 判断当前客户端是否拥有球的所有权
+            PhotonView ballPhotonView = playerBall.GetComponent<PhotonView>();
             if (ballPhotonView.Owner == PhotonNetwork.LocalPlayer)
             {
-
+                // 如果当前客户端是所有者，直接弹射
                 ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
                 Debug.Log("Ball Launched by Owner with force: " + force + " in direction: " + launchDirection);
             }
             else
             {
+                // 如果当前客户端不是所有者，通过RPC请求所有者弹射
                 ballPhotonView.RPC("LaunchBallRPC", ballPhotonView.Owner, launchDirection, force);
                 Debug.Log("LaunchBallRPC called to Owner");
             }
         }
         else
         {
-            Debug.LogError("No ball found with the tag 'Ball'");
+            Debug.LogError("未引用到玩家自己的球！");
         }
     }
 
     [PunRPC]
     void LaunchBallRPC(Vector3 launchDirection, float force)
     {
-        GameObject ball = GameObject.FindWithTag("Ball");
-        if (ball != null)
+        if (playerBall != null)
         {
-            Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
+            Rigidbody ballRigidbody = playerBall.GetComponent<Rigidbody>();
             ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
-            Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);
+            Debug.Log("Ball Launched via RPC with force: " + force + " in direction: " + launchDirection);
         }
         else
         {
-            Debug.LogError("No ball found with the tag 'Ball'");
+            Debug.LogError("未引用到玩家自己的球！");
         }
     }
 
