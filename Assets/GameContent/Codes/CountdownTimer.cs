@@ -6,7 +6,7 @@ using TMPro;
 
 public class CountdownTimer : MonoBehaviourPunCallbacks
 {
-    public float countdownTime = 60f; // 倒计时时间，单位：秒
+    public float countdownTime = 60f;
     private float currentTime;
     public TextMeshProUGUI countdownText;
 
@@ -28,7 +28,6 @@ public class CountdownTimer : MonoBehaviourPunCallbacks
             yield return null;
         }
 
-        // 倒计时结束，执行游戏结束逻辑
         photonView.RPC("OnCountdownEnd", RpcTarget.All);
     }
 
@@ -43,7 +42,7 @@ public class CountdownTimer : MonoBehaviourPunCallbacks
     [PunRPC]
     void OnCountdownEnd()
     {
-        Debug.Log("倒计时结束，游戏结束！");
+        Debug.Log("gameover");
 
         StartCoroutine(LoadScoreboardScene());
 
@@ -53,7 +52,6 @@ public class CountdownTimer : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1f);
 
-        // 加载 Scoreboard 场景
         PhotonNetwork.LoadLevel("Scoreboard");
     }
 }

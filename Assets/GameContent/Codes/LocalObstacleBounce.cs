@@ -10,6 +10,13 @@ public class LocalObstacleBounce : MonoBehaviour
     private Volume volume;
     private Bloom bloomEffect;
 
+    private GameObject hitSound;
+
+    void Awake()
+    {
+        LoadCollisionAudioPrefab();
+    }
+
     void Start()
     {
         volume = FindObjectOfType<Volume>();
@@ -40,15 +47,16 @@ public class LocalObstacleBounce : MonoBehaviour
             Vector3 normal = collision.contacts[0].normal;
             ballRb.AddForce(-normal * bounceForce, ForceMode.Impulse);
 
-            // 检查碰撞的小球颜色
             if (collision.collider.CompareTag("BlueBall"))
             {
-                ChangeBloomTint(HexToColor("4E5EFF"));  // 使用HexToColor函数
+                ChangeBloomTint(HexToColor("4E5EFF"));
             }
             else if (collision.collider.CompareTag("RedBall"))
             {
                 ChangeBloomTint(HexToColor("E25AFF"));
             }
+
+            PlayCollisionSound();
         }
     }
 
@@ -60,7 +68,49 @@ public class LocalObstacleBounce : MonoBehaviour
         }
     }
 
-    // 辅助方法：将十六进制字符串转换为Color
+    void LoadCollisionAudioPrefab()
+    {
+
+        hitSound = Resources.Load<GameObject>("hitSound");
+
+        if (hitSound != null)
+        {
+            Debug.Log("Collision Audio Prefab loaded successfully.");
+        }
+        else
+        {
+            Debug.LogError("Failed to load Collision Audio Prefab. Check the path and ensure it is in a Resources folder.");
+        }
+    }
+
+    void PlayCollisionSound()
+    {
+        if (hitSound != null)
+        {
+            GameObject audioInstance = Instantiate(hitSound, transform.position, Quaternion.identity);
+
+            AudioSource audioSource = audioInstance.GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.Play();
+
+                StartCoroutine(DestroyAfterPlayback(audioInstance, audioSource));
+            }
+            else
+            {
+                Debug.LogError("Collision Audio Prefab does not have an AudioSource component.");
+                Destroy(audioInstance);
+            }
+        }
+    }
+
+    IEnumerator DestroyAfterPlayback(GameObject obj, AudioSource source)
+    {
+        yield return new WaitForSeconds(source.clip.length);
+        Destroy(obj);
+    }
+
+
     Color HexToColor(string hex)
     {
         if (ColorUtility.TryParseHtmlString($"#{hex}", out Color color))
@@ -70,7 +120,7 @@ public class LocalObstacleBounce : MonoBehaviour
         else
         {
             Debug.LogError("Invalid hex color format.");
-            return Color.white;  // 返回白色作为默认值
+            return Color.white;
         }
     }
 }

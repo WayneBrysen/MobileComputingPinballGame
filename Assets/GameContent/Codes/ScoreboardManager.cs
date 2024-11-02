@@ -8,15 +8,14 @@ using System.Collections.Generic;
 
 public class ScoreboardManager : MonoBehaviourPunCallbacks
 {
-    public GameObject scoreForRank1; // ScoreForRank_1 ���������
-    public GameObject scoreForRank2; // ScoreForRank_2 ���������
+    public GameObject scoreForRank1;
+    public GameObject scoreForRank2;
 
     public TextMeshProUGUI finalScoreText; // Reference to the UI Text object for displaying the final score
     public TextMeshProUGUI scoreOnlyText;
 
     void Start()
     {
-        // �ȴ�������Ҷ������˳���
         StartCoroutine(WaitForPlayersAndDisplayScores());
         
         DisplayFinalScore();
@@ -24,16 +23,13 @@ public class ScoreboardManager : MonoBehaviourPunCallbacks
 
     IEnumerator WaitForPlayersAndDisplayScores()
     {
-        // �ȴ�ֱ��������Ҷ��ڷ�����
         while (PhotonNetwork.PlayerList.Length < 2)
         {
             yield return null;
         }
 
-        // �ȴ�һС��ʱ�䣬ȷ������ Custom Properties �Ѹ���
         yield return new WaitForSeconds(0.5f);
 
-        // ��ʾ����
         DisplayScores();
     }
     void DisplayFinalScore()
@@ -53,10 +49,8 @@ public class ScoreboardManager : MonoBehaviourPunCallbacks
 
     void DisplayScores()
     {
-        // ����һ���б����洢��ҵķ�������
         List<PlayerScoreData> playerScores = new List<PlayerScoreData>();
 
-        // ����������ң���ȡ���ǵķ���
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             int score = 0;
@@ -68,10 +62,8 @@ public class ScoreboardManager : MonoBehaviourPunCallbacks
             playerScores.Add(new PlayerScoreData(player.NickName, score));
         }
 
-        // ���ݷ����Ӹߵ�������
         playerScores.Sort((x, y) => y.score.CompareTo(x.score));
 
-        // ���� UI ��ʾ
         if (playerScores.Count >= 1)
         {
             UpdateScoreUI(scoreForRank1, "1", playerScores[0]);
@@ -94,7 +86,6 @@ public class ScoreboardManager : MonoBehaviourPunCallbacks
         scoreText.text = playerData.score.ToString();
     }
 
-    // �����࣬���ڴ洢�������
     class PlayerScoreData
     {
         public string nickName;
