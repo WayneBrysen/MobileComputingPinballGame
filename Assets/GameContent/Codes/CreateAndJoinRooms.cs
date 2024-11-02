@@ -25,12 +25,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         if (!string.IsNullOrEmpty(nicknameInput.text))
         {
             PhotonNetwork.NickName = nicknameInput.text;
-            Debug.Log("Player's nickname£º" + PhotonNetwork.NickName);
+            Debug.Log("Player's nickname: " + PhotonNetwork.NickName);
             ToggleRoomUI(true);
         }
         else
         {
-            Debug.LogWarning("give a valid name£¡");
+            Debug.LogWarning("give a valid name!");
             ToggleRoomUI(false);
 
         }

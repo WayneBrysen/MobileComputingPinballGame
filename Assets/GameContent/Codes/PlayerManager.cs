@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        // 自动查找场景中的摄像机
+        // automatically find out camera
         southPlayerCamera = GameObject.FindWithTag("SouthCamera");
         northPlayerCamera = GameObject.FindWithTag("NorthCamera");
 
@@ -33,7 +33,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             Debug.LogWarning("North Camera not found!");
         }
 
-        // 自动查找场景中的控制器
+        // automatically find out controller
         southController = GameObject.Find("southController");
         northController = GameObject.Find("northController");
 
@@ -73,17 +73,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         if (photonView.IsMine)
         {
-            Debug.Log("这是本地客户端的 PlayerManager");
+            Debug.Log("This playermanager is mine");
         }
         else
         {
-            Debug.Log("这是其他客户端的 PlayerManager");
+            Debug.Log("This client is others");
         }
 
         if (PhotonNetwork.InRoom)
         {
             OnJoinedRoom();
-            Debug.Log("已经在房间中，手动调用 OnJoinedRoom()");
+            Debug.Log("already in the room, call OnJoinedRoom()");
         }
     }
 
@@ -93,11 +93,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
             {
-                SetPlayerPosition(true); // 南侧（房主）
+                SetPlayerPosition(true);
             }
             else
             {
-                SetPlayerPosition(false); // 北侧（客机）
+                SetPlayerPosition(false);
                 TransferFlipperOwnership(northController);
             }
             SpawnPlayerBall();
@@ -114,9 +114,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         PlungerLauncher plungerLauncher = playerplunger.GetComponent<PlungerLauncher>();
 
-        Debug.Log("开始传递");
         plungerLauncher.playerBall = this.playerBall;
-        Debug.Log("传递完成");
 
 
         PhotonView plungerView = playerplunger.GetComponent<PhotonView>();
@@ -126,7 +124,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             playerplunger.SetActive(false);
         }
 
-        Debug.Log("生成了玩家的 plunger：" + "plunger" + " 在位置：" + spawnPosition);
+        Debug.Log("generate plunger：" + "plunger" + " at location: " + spawnPosition);
     }
 
     void SpawnPlayerBall()
@@ -137,21 +135,20 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
             if (string.IsNullOrEmpty(selectedBallPrefabName))
             {
-                Debug.LogError("未找到玩家选择的球的预制体名称！");
+                Debug.LogError("cannot find the ball from the player");
                 return;
             }
 
-            // 生成球的位置：房主在 p1BallPosition，客机在 p2BallPosition
             Vector3 spawnPosition = PhotonNetwork.LocalPlayer.IsMasterClient ? p1BallPosition : p2BallPosition;
 
-            // 生成球，并自动分配控制权给本地客户端
+            // generate ball from photonnetwork
             playerBall = PhotonNetwork.Instantiate(selectedBallPrefabName, spawnPosition, Quaternion.identity);
 
-            Debug.Log("生成了玩家的球：" + selectedBallPrefabName + " 在位置：" + spawnPosition);
+            Debug.Log("generate plunger：" + "plunger" + " at location: " + spawnPosition);
         }
         else
         {
-            Debug.LogError("玩家未选择球的预制体名称！");
+            Debug.LogError("cannot find the ball from the player");
         }
     }
 
@@ -162,7 +159,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     void TransferFlipperOwnership(GameObject controller)
     {
-        Debug.Log("开始转移控制权");
+        Debug.Log("start transforming ownership");
 
         var photonViews = controller.GetComponentsInChildren<PhotonView>();
         foreach (var view in photonViews)
@@ -170,7 +167,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.LocalPlayer != view.Owner)
             {
                 view.TransferOwnership(PhotonNetwork.LocalPlayer);
-                Debug.Log("所有权转移: " + view.ViewID + " 转给了: " + PhotonNetwork.LocalPlayer.NickName);
+                Debug.Log("ownership: " + view.ViewID + " transfered to " + PhotonNetwork.LocalPlayer.NickName);
             }
         }
     }
@@ -180,7 +177,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     {
         if (isSouthSide)
         {
-            Debug.Log("启用南侧玩家摄像机，禁用北侧玩家摄像机。");
+            Debug.Log("activate south camera, diactivate north");
             if (southPlayerCamera != null) southPlayerCamera.SetActive(true);
             if (northPlayerCamera != null) northPlayerCamera.SetActive(false);
 
@@ -189,7 +186,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("启用北侧玩家摄像机，禁用南侧玩家摄像机。");
+            Debug.Log("activate north camera, diactivate south");
             if (northPlayerCamera != null) northPlayerCamera.SetActive(true);
             if (southPlayerCamera != null) southPlayerCamera.SetActive(false);
 
@@ -198,7 +195,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // 启用或禁用 flippers 的控制
     void SetFlippersControl(GameObject controller, bool isEnabled)
     {
         var leftFlipper = controller.transform.Find("LeftFlipper").GetComponent<LeftFlipperControl>();
@@ -208,21 +204,21 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (leftFlipper != null)
         {
             leftFlipper.enabled = isEnabled;
-            Debug.Log("设置 leftFlipper");
+            Debug.Log("set leftFlipper");
 
         }
 
         if (rightFlipper != null)
         {
             rightFlipper.enabled = isEnabled;
-            Debug.Log("设置 rightFlipper");
+            Debug.Log("set rightFlipper");
 
         }
 
         if (gameManager != null)
         {
             gameManager.enabled = isEnabled;
-            Debug.Log("设置 GameManager");
+            Debug.Log("set GameManager");
 
         }
 

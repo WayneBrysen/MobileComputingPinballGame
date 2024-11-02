@@ -55,15 +55,13 @@ public class FlipperScript : MonoBehaviourPun
         }
     }
 
-    // 使用 RPC 在所有客户端同步 flipper 的状态
     [PunRPC]
     void SyncFlipper(float targetPosition)
     {
-        // 调试日志，检查 RPC 是否被所有客户端接收到
         Debug.Log(gameObject.name + " received SyncFlipper RPC with position: " + targetPosition);
 
-        spring.targetPosition = targetPosition;  // 设置目标位置
-        hinge.spring = spring;  // 应用弹簧配置
-        hinge.useLimits = true;  // 使用关节的限制
+        spring.targetPosition = targetPosition;
+        hinge.spring = spring;
+        hinge.useLimits = true;
     }
 }

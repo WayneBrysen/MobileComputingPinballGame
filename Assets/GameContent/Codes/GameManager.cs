@@ -6,20 +6,18 @@ using TMPro;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public TextMeshProUGUI myScoreText;         // ��ʾ�Լ��ķ���
-    public TextMeshProUGUI opponentScoreText;   // ��ʾ���ֵķ���
+    public TextMeshProUGUI myScoreText;
+    public TextMeshProUGUI opponentScoreText;
 
     [SerializeField]
     private TextMeshProUGUI scoreObjectText; // Reference to the "Score" object in the scene
 
-    private int score = 0;                      // �Լ��ķ���
+    private int score = 0;
 
     void Start()
     {
-        // ��ʼ���Լ��ķ�����ʾ
         myScoreText.text = PhotonNetwork.NickName + " Score: 0";
 
-        // ��ʼ�����ֵķ�����ʾ
         int opponentScore = 0;
 
         foreach (Player player in PhotonNetwork.PlayerList)
@@ -28,14 +26,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 string opponentName = player.NickName;
 
-                // �������Ƿ��Ѿ��з�����¼
                 if (player.CustomProperties.ContainsKey("PlayerScore"))
                 {
                     opponentScore = (int)player.CustomProperties["PlayerScore"];
                 }
 
                 opponentScoreText.text = opponentName + " Score: " + opponentScore.ToString();
-                break;  // ����ֻ��һ�����֣�����ѭ��
+                break;
             }
         }
         // Initialize the "Score" object in the scene
@@ -46,7 +43,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
-    // ���ӷ���������UI
     public void AddScore(int points)
     {
         score += points;
@@ -66,8 +62,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
-
-    // ���¶��ֵķ�����ʾ
     void UpdateOpponentScore(int opponentScore)
     {
         foreach (Player player in PhotonNetwork.PlayerList)
@@ -88,7 +82,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        // ����Ƕ��ֵķ�������
         if (targetPlayer != PhotonNetwork.LocalPlayer && changedProps.ContainsKey("PlayerScore"))
         {
             int opponentScore = (int)changedProps["PlayerScore"];
