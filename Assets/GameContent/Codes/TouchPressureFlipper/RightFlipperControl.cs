@@ -4,11 +4,11 @@ using UnityEngine;
 public class RightFlipperControl : MonoBehaviourPun
 {
     public float restPosition = 0f;
-    public float pressedPosition = 45f;
-    public float minHitStrength = 3000f;
-    public float maxHitStrength = 20000f; // Maximum hit strength
-    public float flipperDamper = 150f;
-    public float smoothPressureSpeed = 5f; // Pressure smoothing speed
+    public float pressedPosition = 70f;
+    public float minHitStrength = 5000f;
+    public float maxHitStrength = 25000f;
+    public float flipperDamper = 200f;
+    public float smoothPressureSpeed = 10f;
     private HingeJoint hinge;
     private bool isPressed = false;
     private float currentPressure = 0f; // Current pressure value
@@ -63,7 +63,7 @@ public class RightFlipperControl : MonoBehaviourPun
     void ControlFlipper()
     {
         currentPressure = Mathf.Lerp(currentPressure, targetPressure, Time.deltaTime * smoothPressureSpeed);
-        float springForce = Mathf.Clamp(minHitStrength + 15000 * currentPressure, 5000, 20000);
+        float springForce = Mathf.Clamp(minHitStrength + 20000 * currentPressure, minHitStrength, maxHitStrength);
 
         spring.spring = springForce;
         spring.targetPosition = isPressed ? pressedPosition : restPosition;
