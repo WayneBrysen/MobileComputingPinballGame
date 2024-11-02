@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private Vector3 p1PlungerPosition;
     private Vector3 p2PlungerPosition;
 
+    private GameObject playerBall;
+
     void Start()
     {
         // 自动查找场景中的摄像机
@@ -129,10 +131,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 SetPlayerPosition(false); // 北侧（客机）
                 TransferFlipperOwnership(northController);
             }
-
-            SpawnPlayerplunger();
-
             SpawnPlayerBall();
+            SpawnPlayerplunger();
         }
     }
 
@@ -141,19 +141,23 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     {
         Vector3 spawnPosition = PhotonNetwork.LocalPlayer.IsMasterClient ? p1PlungerPosition : p2PlungerPosition;
 
-        // 生成plunger
         GameObject playerplunger = PhotonNetwork.Instantiate("plunger", spawnPosition, Quaternion.identity);
 
-        // 获取plunger的PhotonView组件
+        PlungerLauncher plungerLauncher = playerplunger.GetComponent<PlungerLauncher>();
+
+        Debug.Log("开始传递");
+        plungerLauncher.playerBall = this.playerBall;
+        Debug.Log("传递完成");
+
+
         PhotonView plungerView = playerplunger.GetComponent<PhotonView>();
 
-        // 如果plunger不属于本地玩家，则禁用它
         if (!plungerView.IsMine)
         {
-            playerplunger.SetActive(false); // 禁用非本地的plunger
+            playerplunger.SetActive(false);
         }
 
-        Debug.Log("生成了玩家的plunger：" + "plunger" + " 在位置：" + spawnPosition);
+        Debug.Log("生成了玩家的 plunger：" + "plunger" + " 在位置：" + spawnPosition);
     }
 
     void SpawnPlayerBall()
@@ -172,7 +176,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             Vector3 spawnPosition = PhotonNetwork.LocalPlayer.IsMasterClient ? p1BallPosition : p2BallPosition;
 
             // 生成球，并自动分配控制权给本地客户端
-            GameObject playerBall = PhotonNetwork.Instantiate(selectedBallPrefabName, spawnPosition, Quaternion.identity);
+            playerBall = PhotonNetwork.Instantiate(selectedBallPrefabName, spawnPosition, Quaternion.identity);
 
             Debug.Log("生成了玩家的球：" + selectedBallPrefabName + " 在位置：" + spawnPosition);
         }
@@ -180,6 +184,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             Debug.LogError("玩家未选择球的预制体名称！");
         }
+    }
+
+    public GameObject GetPlayerBall()
+    {
+        return playerBall;
     }
 
     void TransferFlipperOwnership(GameObject controller)

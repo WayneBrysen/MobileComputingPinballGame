@@ -1343,6 +1343,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loader: {fileID: 2045882723}
+  transition: {fileID: 2045882724}
+  transitionTime: 1
 --- !u!4 &1287807008
 Transform:
   m_ObjectHideFlags: 0
@@ -2639,6 +2641,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db939ac09cad49cd828e34007c7d30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &2045882724 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6427426107548073503, guid: 943d3b17ec21d469cb50796d9604210b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2045882722}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

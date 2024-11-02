@@ -6,16 +6,20 @@ using TMPro;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public TextMeshProUGUI myScoreText;         // ÏÔÊ¾×Ô¼ºµÄ·ÖÊý
-    public TextMeshProUGUI opponentScoreText;   // ÏÔÊ¾¶ÔÊÖµÄ·ÖÊý
-    private int score = 0;                      // ×Ô¼ºµÄ·ÖÊý
+    public TextMeshProUGUI myScoreText;         // ï¿½ï¿½Ê¾ï¿½Ô¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
+    public TextMeshProUGUI opponentScoreText;   // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ÖµÄ·ï¿½ï¿½ï¿½
+
+    [SerializeField]
+    private TextMeshProUGUI scoreObjectText; // Reference to the "Score" object in the scene
+
+    private int score = 0;                      // ï¿½Ô¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
 
     void Start()
     {
-        // ³õÊ¼»¯×Ô¼ºµÄ·ÖÊýÏÔÊ¾
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
         myScoreText.text = PhotonNetwork.NickName + " Score: 0";
 
-        // ³õÊ¼»¯¶ÔÊÖµÄ·ÖÊýÏÔÊ¾
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
         int opponentScore = 0;
 
         foreach (Player player in PhotonNetwork.PlayerList)
@@ -24,25 +28,38 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 string opponentName = player.NickName;
 
-                // ¼ì²é¶ÔÊÖÊÇ·ñÒÑ¾­ÓÐ·ÖÊý¼ÇÂ¼
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½Â¼
                 if (player.CustomProperties.ContainsKey("PlayerScore"))
                 {
                     opponentScore = (int)player.CustomProperties["PlayerScore"];
                 }
 
                 opponentScoreText.text = opponentName + " Score: " + opponentScore.ToString();
-                break;  // ¼ÙÉèÖ»ÓÐÒ»¸ö¶ÔÊÖ£¬Ìø³öÑ­»·
+                break;  // ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
             }
         }
+        // Initialize the "Score" object in the scene
+        if (scoreObjectText != null)
+        {
+        scoreObjectText.text = "Score: 0";
+        }
+
     }
 
-    // Ôö¼Ó·ÖÊý²¢¸üÐÂUI
+    // ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UI
     public void AddScore(int points)
     {
         score += points;
         myScoreText.text = PhotonNetwork.NickName + " Score: " + score.ToString();
 
-        // ¸üÐÂCustom Properties
+        // Update the "Score" object in the scene
+        if (scoreObjectText != null)
+        {
+            scoreObjectText.text = "Score: " + score.ToString();
+        }
+
+
+        // ï¿½ï¿½ï¿½ï¿½Custom Properties
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable
         {
             { "PlayerScore", score }
@@ -50,7 +67,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
-    // ¸üÐÂ¶ÔÊÖµÄ·ÖÊýÏÔÊ¾
+    // ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ÖµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
     void UpdateOpponentScore(int opponentScore)
     {
         foreach (Player player in PhotonNetwork.PlayerList)
@@ -63,10 +80,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    public void SaveFinalScore()
+    {
+    PlayerPrefs.SetInt("FinalScore", score); // Save the score to PlayerPrefs
+    PlayerPrefs.Save(); // Ensure the score is saved
+    }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        // Èç¹ûÊÇ¶ÔÊÖµÄ·ÖÊý¸üÐÂ
+        // ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½ÖµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (targetPlayer != PhotonNetwork.LocalPlayer && changedProps.ContainsKey("PlayerScore"))
         {
             int opponentScore = (int)changedProps["PlayerScore"];
