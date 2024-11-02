@@ -44,6 +44,9 @@ public class FlipperTouchController : MonoBehaviourPun
         // Initialize flipper colors to normal
         leftFlipperRenderer.material.color = normalColor;
         rightFlipperRenderer.material.color = normalColor;
+
+        // Set initial audio volume to 0
+        audioSource.volume = 0f;
     }
 
     void Update()
@@ -71,7 +74,7 @@ public class FlipperTouchController : MonoBehaviourPun
                 Touch touch = Input.GetTouch(i);
                 float pressure = Mathf.Clamp(touch.pressure, 0f, 1f);
 
-                targetVolume = Mathf.Lerp(0f, maxVolume, pressure);
+                targetVolume = pressure >= volumeThreshold ? Mathf.Lerp(0f, maxVolume, pressure) : 0f;
                 currentVolume = Mathf.Lerp(currentVolume, targetVolume, Time.deltaTime * smoothSpeed);
                 audioSource.volume = currentVolume;
 
@@ -181,5 +184,3 @@ public class FlipperTouchController : MonoBehaviourPun
         Debug.Log("Double Points Mode Deactivated");
     }
 }
-
-
