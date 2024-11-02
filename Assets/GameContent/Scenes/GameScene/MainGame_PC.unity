@@ -6533,11 +6533,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   restPosition: 0
-  pressedPosition: 45
-  minHitStrength: 3000
-  maxHitStrength: 20000
-  flipperDamper: 150
-  smoothPressureSpeed: 5
+  pressedPosition: 70
+  minHitStrength: 5000
+  maxHitStrength: 25000
+  flipperDamper: 200
+  smoothPressureSpeed: 10
 --- !u!1001 &866761231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8621,11 +8621,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   restPosition: 0
-  pressedPosition: 45
-  minHitStrength: 3000
-  maxHitStrength: 20000
-  flipperDamper: 150
-  smoothPressureSpeed: 5
+  pressedPosition: 70
+  minHitStrength: 5000
+  maxHitStrength: 25000
+  flipperDamper: 200
+  smoothPressureSpeed: 10
 --- !u!1001 &1125758842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9731,11 +9731,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   restPosition: 0
-  pressedPosition: -45
-  minHitStrength: 3000
-  maxHitStrength: 20000
-  flipperDamper: 150
-  smoothPressureSpeed: 5
+  pressedPosition: -70
+  minHitStrength: 5000
+  maxHitStrength: 25000
+  flipperDamper: 200
+  smoothPressureSpeed: 10
 --- !u!114 &1179813338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16186,11 +16186,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   restPosition: 0
-  pressedPosition: -45
-  minHitStrength: 3000
-  maxHitStrength: 20000
-  flipperDamper: 150
-  smoothPressureSpeed: 5
+  pressedPosition: -70
+  minHitStrength: 5000
+  maxHitStrength: 25000
+  flipperDamper: 200
+  smoothPressureSpeed: 10
 --- !u!114 &2112383333
 MonoBehaviour:
   m_ObjectHideFlags: 0
