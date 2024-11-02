@@ -8,9 +8,11 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     public TMP_InputField nicknameInput;
     public TMP_InputField createInput;
     public TMP_InputField joinInput;
+    public TMP_Text title;
 
     public GameObject createRoomButton;
     public GameObject joinRoomButton;
+
 
     void Start()
     {
@@ -36,10 +38,37 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     private void ToggleRoomUI(bool isVisible)
     {
-        createRoomButton.SetActive(isVisible);
-        joinRoomButton.SetActive(isVisible);
-        createInput.gameObject.SetActive(isVisible);
-        joinInput.gameObject.SetActive(isVisible);
+
+
+        if (createRoomButton != null)
+        {
+            createRoomButton.SetActive(isVisible);
+
+        }
+
+        if (joinRoomButton != null)
+        {
+            joinRoomButton.SetActive(isVisible);
+
+        }
+
+        if (createInput != null)
+        {
+            createInput.gameObject.SetActive(isVisible);
+
+        }
+
+        if (joinInput != null)
+        {
+            joinInput.gameObject.SetActive(isVisible);
+
+        }
+
+        if (title != null)
+        {
+            title.gameObject.SetActive(isVisible);
+
+        }
     }
 
     public void CreateRoom()

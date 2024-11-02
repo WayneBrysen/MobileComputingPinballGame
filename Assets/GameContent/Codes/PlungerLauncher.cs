@@ -111,27 +111,21 @@ public class PlungerLauncher : MonoBehaviourPun
     {
         if (playerBall != null)
         {
-            Debug.Log("得到球的rigidbody");
+            Debug.Log("get rigidbody");
             Rigidbody ballRigidbody = playerBall.GetComponent<Rigidbody>();
-            Debug.Log("得到了rigidbody");
+            Debug.Log("got rigidbody");
 
             Vector3 launchDirection = (playerBall.transform.position - this.transform.position).normalized;
             float force = Mathf.Clamp(maxVolume, 0f, 1f) * 30f;
 
-            // 判断当前客户端是否拥有球的所有权
-            Debug.Log("判断当前客户端是否拥有球的所有权");
             PhotonView ballPhotonView = playerBall.GetComponent<PhotonView>();
-            Debug.Log("判断成功");
             if (ballPhotonView.Owner == PhotonNetwork.LocalPlayer)
             {
-                // 如果当前客户端是所有者，直接弹射
-                Debug.Log("如果是，弹射");
                 ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
                 Debug.Log("Ball Launched by Owner with force: " + force + " in direction: " + launchDirection);
             }
             else
             {
-                Debug.Log("不是，请求RPC");
 
                 ballPhotonView.RPC("LaunchBallRPC", ballPhotonView.Owner, launchDirection, force);
                 Debug.Log("LaunchBallRPC called to Owner");
@@ -139,7 +133,7 @@ public class PlungerLauncher : MonoBehaviourPun
         }
         else
         {
-            Debug.LogError("未引用到玩家自己的球！");
+            Debug.LogError("dont get the ball");
         }
     }
 
@@ -154,7 +148,7 @@ public class PlungerLauncher : MonoBehaviourPun
         }
         else
         {
-            Debug.LogError("未引用到玩家自己的球！");
+            Debug.LogError("dont get the ball");
         }
     }
 
