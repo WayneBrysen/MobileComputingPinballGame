@@ -100,10 +100,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 SetPlayerPosition(false); // ±±²à£¨¿Í»ú£©
                 TransferFlipperOwnership(northController);
             }
-
-            SpawnPlayerplunger();
-
             SpawnPlayerBall();
+            SpawnPlayerplunger();
         }
     }
 
