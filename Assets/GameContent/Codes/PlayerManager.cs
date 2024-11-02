@@ -113,15 +113,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // 生成plunger
         GameObject playerplunger = PhotonNetwork.Instantiate("plunger", spawnPosition, Quaternion.identity);
 
-        // 获取plunger的PhotonView组件
-        PhotonView plungerView = playerplunger.GetComponent<PhotonView>();
-
-        // 如果plunger不属于本地玩家，则禁用它
-        if (!plungerView.IsMine)
-        {
-            playerplunger.SetActive(false); // 禁用非本地的plunger
-        }
-
         Debug.Log("生成了玩家的plunger：" + "plunger" + " 在位置：" + spawnPosition);
     }
 

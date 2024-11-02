@@ -112,9 +112,36 @@ public class PlungerLauncher : MonoBehaviourPun
         {
             Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
             Vector3 launchDirection = (ball.transform.position - this.transform.position).normalized;
-            float force = Mathf.Clamp(maxVolume, 0f, 1f) * 30f; // 3f is the maximum force
-            ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
+            float force = Mathf.Clamp(maxVolume, 0f, 1f) * 30f;
 
+           
+            PhotonView ballPhotonView = ball.GetComponent<PhotonView>();
+            if (ballPhotonView.Owner == PhotonNetwork.LocalPlayer)
+            {
+
+                ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
+                Debug.Log("Ball Launched by Owner with force: " + force + " in direction: " + launchDirection);
+            }
+            else
+            {
+                ballPhotonView.RPC("LaunchBallRPC", ballPhotonView.Owner, launchDirection, force);
+                Debug.Log("LaunchBallRPC called to Owner");
+            }
+        }
+        else
+        {
+            Debug.LogError("No ball found with the tag 'Ball'");
+        }
+    }
+
+    [PunRPC]
+    void LaunchBallRPC(Vector3 launchDirection, float force)
+    {
+        GameObject ball = GameObject.FindWithTag("Ball");
+        if (ball != null)
+        {
+            Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
+            ballRigidbody.AddForce(launchDirection * force, ForceMode.Impulse);
             Debug.Log("Ball Launched with force: " + force + " in direction: " + launchDirection);
         }
         else
