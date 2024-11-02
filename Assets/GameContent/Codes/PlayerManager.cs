@@ -116,7 +116,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         PlungerLauncher plungerLauncher = playerplunger.GetComponent<PlungerLauncher>();
 
+        Debug.Log("开始传递");
         plungerLauncher.playerBall = this.playerBall;
+        Debug.Log("传递完成");
+
 
         PhotonView plungerView = playerplunger.GetComponent<PhotonView>();
 
