@@ -2379,6 +2379,8 @@ MonoBehaviour:
   title: {fileID: 1957778974}
   createRoomButton: {fileID: 345977569}
   joinRoomButton: {fileID: 0}
+  transition: {fileID: 1097318569}
+  transitionTime: 1
 --- !u!4 &1089022444
 Transform:
   m_ObjectHideFlags: 0
@@ -2468,6 +2470,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 943d3b17ec21d469cb50796d9604210b, type: 3}
+--- !u!95 &1097318569 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6427426107548073503, guid: 943d3b17ec21d469cb50796d9604210b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1097318568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1106487791
 PrefabInstance:
   m_ObjectHideFlags: 0

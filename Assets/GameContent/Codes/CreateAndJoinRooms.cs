@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Photon.Pun;
 using UnityEngine;
@@ -81,8 +83,23 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(joinInput.text);
     }
 
+    public Animator transition;
+    public float transitionTime = 1f;
+
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("BallChoosingUI");
+        StartCoroutine(GoToSelectedScene("BallChoosingUI"));
+    }
+
+    IEnumerator GoToSelectedScene(string pageName)
+    {
+        //Play
+        transition.SetTrigger("Start");
+
+        //Wait
+        yield return new WaitForSeconds(transitionTime);
+
+        //Load
+        PhotonNetwork.LoadLevel(pageName);
     }
 }
