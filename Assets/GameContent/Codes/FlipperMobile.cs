@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;  // 引入EventSystems以处理事件触发器
 
 public class FlipperMobile : MonoBehaviour
 {
@@ -12,7 +11,7 @@ public class FlipperMobile : MonoBehaviour
     public float flipperDamper = 150f;
     HingeJoint hinge;
 
-    private bool isPressed = false;  // 判断按钮是否按下
+    private bool isPressed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,16 +20,14 @@ public class FlipperMobile : MonoBehaviour
         hinge.useSpring = true;
     }
 
-    // 当按钮按下时的回调
     public void OnButtonPress()
     {
-        isPressed = true;  // 按下按钮
+        isPressed = true;
     }
 
-    // 当按钮松开时的回调
     public void OnButtonRelease()
     {
-        isPressed = false;  // 松开按钮
+        isPressed = false;
     }
 
     // Update is called once per frame

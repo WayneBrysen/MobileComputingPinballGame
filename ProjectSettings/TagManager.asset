@@ -9,6 +9,7 @@ TagManager:
   - NorthCamera
   - BlueBall
   - RedBall
+  - Boundary
   layers:
   - Default
   - TransparentFX
