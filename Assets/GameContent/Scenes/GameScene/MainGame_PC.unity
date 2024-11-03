@@ -1050,10 +1050,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cdfab68e200464842847522ffb19ae13, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1150,7 +1150,8 @@ MonoBehaviour:
   leftFlipper: {fileID: 1179813337}
   rightFlipper: {fileID: 857658756}
   audioSource: {fileID: 0}
-  maxVolume: 1
+  minPitch: 1
+  maxPitch: 1.5
   smoothSpeed: 5
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 1, g: 0, b: 0, a: 1}
@@ -3748,7 +3749,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8bb3b19ff0dcb4d44b24bc5f59753e1f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.57
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -9387,10 +9388,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cdfab68e200464842847522ffb19ae13, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -9487,7 +9488,8 @@ MonoBehaviour:
   leftFlipper: {fileID: 2112383332}
   rightFlipper: {fileID: 1122922175}
   audioSource: {fileID: 0}
-  maxVolume: 1
+  minPitch: 1
+  maxPitch: 1.5
   smoothSpeed: 5
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 1, g: 0, b: 0, a: 1}
