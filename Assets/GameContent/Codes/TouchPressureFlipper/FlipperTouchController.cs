@@ -19,7 +19,7 @@ public class FlipperTouchController : MonoBehaviourPun
     private float currentPitch = 1f;
     public float smoothSpeed = 5.0f; // Smooth transition speed
 
-    public Color normalColor = Color.white; // Normal flipper color
+    private Color normalColor = Color.black; // Normal flipper color
     public Color highlightColor = Color.red; // Flipper color during double points mode
 
     private Renderer leftFlipperRenderer;

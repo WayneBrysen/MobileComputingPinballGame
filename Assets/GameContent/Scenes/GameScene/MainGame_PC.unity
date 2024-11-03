@@ -1240,7 +1240,6 @@ MonoBehaviour:
   minPitch: 1
   maxPitch: 1.5
   smoothSpeed: 5
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &186923431
 PrefabInstance:
@@ -9868,7 +9867,6 @@ MonoBehaviour:
   minPitch: 1
   maxPitch: 1.5
   smoothSpeed: 5
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1156578372
 GameObject:
